@@ -1,0 +1,129 @@
+body {
+  padding-top: 0px;
+  padding-bottom: 40px;
+}
+
+.form-index{
+  max-width:1000px;
+  margin-left:480px;
+  margin-top:150px;
+}
+
+.form-register {
+  max-width: 610px;
+  padding: 15px;
+  margin: 0 auto;
+}
+
+.form-left{
+    width: 300px;
+    margin-right: 10px;
+}
+
+td{
+    padding-bottom: 5px;
+    width:300px;
+}
+
+.form-center {
+  max-width: 150px;
+  margin-left: 450px;
+  margin-right: 50px;
+}
+
+.form-next {
+  max-width: 160px;
+  margin-left: 50px;
+  margin-right: 5px;
+}
+
+.blueText {
+  color: #0000FF;
+}
+
+.form-vol {
+  max-width:150px;
+  margin-left:0px;
+  padding:5px;
+  -moz-border-radius: 15px;
+    -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.form-groupname {
+  max-width:300px;
+  margin-right: 0px;
+  margin-left:45px;
+  padding:5px;
+  -moz-border-radius: 15px;
+    -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+.form-groupdes {
+  max-width:280px;
+  margin-right: 0px;
+  margin-left:5px;
+  padding:5px;
+  -moz-border-radius: 15px;
+    -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+.form-iprange {
+  max-width:250px;
+  margin-right: 0px;
+  margin-left:20px;
+  padding:5px;
+  -moz-border-radius: 15px;
+    -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+.form-ipprotocol {
+  margin-right: 0px;
+  margin-left:15px;
+  padding:5px;
+  -moz-appearance: none;
+}
+
+.form-port {
+  max-width:70px;
+  margin-right: 0px;
+  margin-left:0px;
+  padding:5px;
+  -moz-border-radius: 15px;
+    -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+
+[tooltip]:before {
+    /* needed - do not touch */
+    content: attr(tooltip);
+    position: absolute;
+    opacity: 0;
+    
+    /* customizable */
+    transition: all 0.15s ease;
+    padding: 10px;
+    color: #333;
+    border-radius: 10px;
+    box-shadow: 2px 2px 1px silver;    
+}
+
+[tooltip]:hover:before {
+    /* needed - do not touch */
+    opacity: 1;
+    
+    /* customizable */
+    background: yellow;
+    margin-top: -100px;
+    margin-left: 400px;  
+    max-width: 300px;
+}
+
+[tooltip]:not([tooltip-persistent]):before {
+    pointer-events: none;
+}
+
+.start{
+  margin-left:160px;
+}

@@ -1,0 +1,29 @@
+#footer{
+    padding-bottom: 5px;
+    padding-bottom: 10px;
+    text-align: center;
+    font-size: 20px;
+}
+
+.hr2{
+    height: 2px;
+    background-color: #f76f6f;
+}
+
+.cap{
+    font-size: 18pt;
+    font-style: italic;
+    color: #f76f6f;
+}
+
+button{
+    width: 150px;
+}
+
+button.last{
+    width: 200px;
+}
+
+.black{
+    color: #000;
+}

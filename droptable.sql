@@ -1,0 +1,12 @@
+drop table if exists users cascade;
+drop table if exists profile cascade;
+drop table if exists diary cascade;
+drop table if exists media cascade;
+drop table if exists friend cascade;
+drop table if exists greeting cascade;
+drop table if exists comment cascade;
+drop table if exists post_d cascade;
+drop table if exists post_p cascade;
+drop table if exists send cascade;
+drop table if exists post_m cascade;
+drop table if exists has cascade;

@@ -1,0 +1,26 @@
+body {
+  padding-top: 0px;
+  padding-bottom: 40px;
+  padding-left:200px;
+}
+
+.form-register {
+  max-width: 600px;
+  padding: 15px;
+  margin: 0 auto;
+}
+
+.form-left{
+    /*width: 300px;*/
+    margin-right: 10px;
+}
+
+td{
+    padding-bottom: 5px;
+}
+
+.form-center {
+  max-width: 600px;
+  padding: 15px;
+  margin: 0 auto;
+}
