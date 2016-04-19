@@ -15,7 +15,7 @@ if (!$conn)
     die('Could not connect:' . pg_last_error());
   }
 
-$sql = file_get_contents('./createtable.sql', true);
+$sql = file_get_contents('./functions/createtable.sql', true);
 
 if (pg_query($conn, $sql)) {
     ?><h1> Presentation Start!! </h1>

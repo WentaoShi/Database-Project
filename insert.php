@@ -53,16 +53,14 @@
                         <td> User Name Existed! Please Change another ! </td>
                         <td>
                             <button class="btn btn-success" type="submit">Again</button>
-                            <!--<input type="button" value="Start!" onclick = "window.location.href='create.php'"/>-->
                         </td>
                     </tr>
                 </table>
             </form>
             <?php
             exit;
-            mysql_free_result($check_query);
             }  
-        else{ 
+        else{
           $uid = uniqid();
             $sql = "INSERT INTO users VALUES
             ('{$uid}','$_GET[uname]', '$_GET[password]', '$_GET[name]', '$_GET[gender]', '$_GET[birthday]', '$_GET[state]','$_GET[city]',  '$_GET[street]', '$_GET[email]');";
@@ -75,14 +73,14 @@
                  <form action="login.php">
                     <table cellpadding="2" cellspacing="3" border="0" width="350px" >
                         <tr>
-                            <td> Congratulate ! You have registered successfully ! </td>
+                            <td> Congratulations! You have registered successfully! </td>
                             <td>
                                 <button class="btn btn-success" type="submit">TO LOGIN!</button>
-                                <!--<input type="button" value="Start!" onclick = "window.location.href='create.php'"/>-->
                             </td>
                         </tr>
                     </table>
-                </form>
+                  </form>
+
               <?php
             
             }
@@ -104,7 +102,7 @@ else{
     </form>
 </div><?php
 }
-pg_close($conn)
+pg_close($conn);
 ?>
 </body>
 </html>

@@ -15,7 +15,7 @@
     <br>
     <h5><span style="color:red">
         * Please note that click "Create Tables!" will erase all<br>
-         existing data. For function testing, just click "Login!""
+         existing data. For function testing, just click "Login!"
     </span></h5>
     <form action="create.php">
                 <div class="start">
