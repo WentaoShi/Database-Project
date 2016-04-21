@@ -7,7 +7,7 @@
     </head>
 <body>
 <div class="form-register">
-<form action="insert.php" method="get" class="form-register">
+<form action="insert.php" method="post" class="form-register">
     <table>
         <tr>
             <td colspan="2"><h2>Register</h2></td>

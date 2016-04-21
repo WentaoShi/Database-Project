@@ -12,8 +12,7 @@ drop table if exists post_m cascade;
 drop table if exists has cascade;
 
 create table if not exists users (
-	uid		varchar(20) primary key not null,
-	username	varchar(20) not null,
+	username		varchar(20) primary key not null,
 	pwd		varchar(20) not null,  -- needs to be hashed 
 	name		varchar(20),
 	gender		char(1), -- 'm' for male, 'f' for female.
@@ -58,30 +57,30 @@ create table if not exists media (
 	);
 
 create table if not exists friend (
-	uid		varchar(20) not null, -- sender's uid when sending the request
-	uid2		varchar(20) not null, -- receiver's uid
+	username		varchar(20) not null, -- sender's username when sending the request
+	username2		varchar(20) not null, -- receiver's username
 	status		varchar(10) not null,
 	res_time	timestamp with time zone not null, 
 -- timestamp when the response has been made
-	primary key (uid, uid2, status),
+	primary key (username, username2, status),
 	check (status in ('pending', 'accepted', 'declined'))
 	);
 
-alter table friend add constraint friend_request_FK foreign key (uid) references users (uid);
-alter table friend add constraint friend_request_FK2 foreign key (uid2) references users (uid);
+alter table friend add constraint friend_request_FK foreign key (username) references users (username);
+alter table friend add constraint friend_request_FK2 foreign key (username2) references users (username);
 
 
 
 create table if not exists greeting (
-	uid		varchar(20) not null, -- sender's uid when sending the greeting
-	uid2		varchar(20) not null, -- receiver's uid
+	username		varchar(20) not null, -- sender's username when sending the greeting
+	username2		varchar(20) not null, -- receiver's username
 	gre_time	timestamp with time zone not null,
 	gre_text	varchar(1000),
-	primary key (uid, uid2, gre_time)
+	primary key (username, username2, gre_time)
 	);
 
-alter table greeting add constraint friend_gre_FK foreign key (uid) references users (uid);
-alter table greeting add constraint friend_gre_FK2 foreign key (uid2) references users (uid);
+alter table greeting add constraint friend_gre_FK foreign key (username) references users (username);
+alter table greeting add constraint friend_gre_FK2 foreign key (username2) references users (username);
 
 create table if not exists comment (
 	cid 		varchar(20),
@@ -91,35 +90,35 @@ create table if not exists comment (
 	);
 
 create table if not exists post_d (
-	uid 		varchar(20) not null,
+	username 		varchar(20) not null,
 	did		varchar(200) not null,
-	primary key (uid, did),
-	foreign key (uid) references users (uid) on delete cascade,
+	primary key (username, did),
+	foreign key (username) references users (username) on delete cascade,
 	foreign key (did) references diary (did) on delete cascade
 	);
 
 
 create table if not exists post_p (
-	uid 		varchar(20) not null,
+	username 		varchar(20) not null,
 	pid		varchar(200) not null,
-	primary key (uid, pid),
-	foreign key (uid) references users (uid) on delete cascade,
+	primary key (username, pid),
+	foreign key (username) references users (username) on delete cascade,
 	foreign key (pid) references profile (pid) on delete cascade
 	);
 
 create table if not exists send (
-	uid 		varchar(20) not null,
+	username 		varchar(20) not null,
 	cid		varchar(200) not null,
-	primary key (uid, cid),
-	foreign key (uid) references users (uid) on delete cascade,
+	primary key (username, cid),
+	foreign key (username) references users (username) on delete cascade,
 	foreign key (cid) references comment (cid) on delete cascade
 	);
 
 create table if not exists post_m (
-	uid 		varchar(20) not null,
+	username 		varchar(20) not null,
 	mid		varchar(200) not null,
-	primary key (uid, mid),
-	foreign key (uid) references users (uid) on delete cascade,
+	primary key (username, mid),
+	foreign key (username) references users (username) on delete cascade,
 	foreign key (mid) references media (mid) on delete cascade
 	);
 

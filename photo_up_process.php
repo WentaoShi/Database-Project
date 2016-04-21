@@ -98,7 +98,7 @@ if ($uploadOk == 0) {
 // if everything is ok, try to upload file
 } else {
     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-        echo setSuccessAlertWithBackButton("This image ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.", "Go back to your home page");
+        echo setSuccessAlertWithBackButton("This image ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.", "Go back to your home page", $uname);
         include("store_photo_indb.php");
         unlink("{$target_file}");
     } else {

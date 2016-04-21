@@ -10,17 +10,17 @@
         <?php 
         include("connect.php");
 
-      $uname = $_GET['uname'];
-      $password = $_GET['password'];
-      $name = $_GET['name'];
-      $birthday = $_GET['birthday'];
-      $passwordn=$_GET['passwordn'];
-      $gender=$_GET['gender'];
-      $state=$_GET['state'];
-      $city=$_GET['city'];
-      $street=$_GET['street'];
-      $email=$_GET['email'];
-      $per_info = $_GET['per_info'];
+      $uname = $_POST['uname'];
+      $password = $_POST['password'];
+      $name = $_POST['name'];
+      $birthday = $_POST['birthday'];
+      $passwordn=$_POST['passwordn'];
+      $gender=$_POST['gender'];
+      $state=$_POST['state'];
+      $city=$_POST['city'];
+      $street=$_POST['street'];
+      $email=$_POST['email'];
+      $per_info = $_POST['per_info'];
       if (!empty($uname) && !empty($password) && !empty($name) && !empty($birthday) && !empty($gender) && !empty($city) && !empty($email))
       {
         if($password!=$passwordn){
@@ -31,7 +31,6 @@
                     <td> Two Passwords doesn't match ! </td>
                     <td>
                         <button class="btn btn-success" type="submit">Again</button>
-                        <!--<input type="button" value="Start!" onclick = "window.location.href='create.php'"/>-->
                     </td>
                 </tr>
             </table>
@@ -61,9 +60,8 @@
             exit;
             }  
         else{
-          $uid = uniqid();
             $sql = "INSERT INTO users VALUES
-            ('{$uid}','$_GET[uname]', '$_GET[password]', '$_GET[name]', '$_GET[gender]', '$_GET[birthday]', '$_GET[state]','$_GET[city]',  '$_GET[street]', '$_GET[email]');";
+            ('$_POST[uname]', '$_POST[password]', '$_POST[name]', '$_POST[gender]', '$_POST[birthday]', '$_POST[state]','$_POST[city]',  '$_POST[street]', '$_POST[email]');";
             if (!pg_query($conn, $sql)){
                 die(pg_last_error());
             }

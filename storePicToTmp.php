@@ -1,5 +1,5 @@
 <?php
-  $res = pg_query("SELECT user_photo FROM users WHERE username='{$uname}'");  
+  $res = pg_query("SELECT user_photo FROM users WHERE username='{$uname}'") or die ("no user photo");  
   $image = stripcslashes(pg_fetch_result($res,0,0));
 
   $data = pg_fetch_result($res, 'user_photo');
