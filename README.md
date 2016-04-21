@@ -1,3 +1,7 @@
+## Update Apr 20:
+
+写、删除diary，diary列表，在Homepage展示最近三个diary。
+
 ## Update Apr 18:
 
 做完了上传头像照片的功能，然后在home页可以展示头像。未上传头像的user展示一张默认头像。已上传头像的用户可以更改头像。
