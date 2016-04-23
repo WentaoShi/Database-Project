@@ -147,21 +147,18 @@
         </div>
 
 
-        <table cellpadding="2" cellspacing="5" border="0" width="400px" >
-        
-        <tr>
-            <td>
-             <button class="btn btn-lg btn-success btn-block form-center" type="submit" onclick = "window.location.href='Get.php'">Submit</button>
-            </td>
+<div class="text-center">
+
+            <input type="submit" value="&nbsp;&nbsp;&nbsp;Submit&nbsp;&nbsp;&nbsp;" name="submit" class="btn btn-lg btn-success">
+
             </form>
-            <form class="form-register">
-            <td>
-             <button class="btn btn-lg btn-danger btn-block form-next" type="button" onclick = "window.location.href='login.php'">Go back login!</button>
-            </td>
+
+
+<a href="window.location.href='login.php'" class="btn btn-danger btn-lg" role="button">Go Back login!</a>
         
-        </tr>
-        </table>
-        </form>
+
+</div>
+        
         
 </body>
 </html>

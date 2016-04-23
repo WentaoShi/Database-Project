@@ -50,6 +50,7 @@ create table if not exists media (
 	photo		bytea,
 	video		bytea,
 	audio		bytea,
+	title		varchar(100),
 	des_text	varchar(1000),
 	media_time	timestamp with time zone not null,
 	visib		varchar(20),

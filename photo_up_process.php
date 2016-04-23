@@ -14,6 +14,7 @@ $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 $uploadOk = 1;
 $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
 $uname=$_POST['uname'];
+$uptype=$_POST['type'];
 
 include("functions/alert.php");
 
@@ -99,8 +100,24 @@ if ($uploadOk == 0) {
 } else {
     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
         echo setSuccessAlertWithBackButton("This image ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.", "Go back to your home page", $uname);
-        include("store_photo_indb.php");
-        unlink("{$target_file}");
+        echo $type;
+        switch ($uptype) {
+            case 'profile':
+                include("functions/store_profile_photo_indb.php");
+                unlink("{$target_file}");
+                break;
+            case 'photo':
+                $title=$_POST['title'];
+                $desc=$_POST['content'];
+                $visib=$_POST['visib'];
+                include("functions/store_photo_indb.php");
+                unlink("{$target_file}");
+                break;
+            default:
+                echo "Failed to Store in DB.";
+        }
+
+
     } else {
         echo "Sorry, there was an error uploading your file.";
     }

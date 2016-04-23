@@ -69,6 +69,7 @@
     <tr><td>
       <input type="file" name="fileToUpload" id="fileToUpload" class="form-control"></td><tr><td>
       <input type="hidden" name="uname" value= <?php echo $uname; ?> >
+      <input type="hidden" name="type" value="profile">
       <input type="submit" value="Upload Image" name="submit" class="btn btn-sm btn-success btn-block form-next"></td></tr>
     </tr><p>
 
@@ -173,7 +174,7 @@
       }
       $title = ucfirst(strtolower($diaryresultarray['title']));
       $shortTitle = strlen($title) > 14 ? substr($title, 0, 14) . " ..." : $title;
-      $shortBody = strlen($body) > 100 ? substr($body, 0, 100) . " ..." : $body;
+      $shortBody = strlen($body) > 90 ? substr($body, 0, 90) . " ..." : $body;
       $shortDate = substr($diaryresultarray['diary_time'], 0, 16);
       echo textThumbnail($shortTitle, $shortDate, $shortBody, $uname, $diaryresultarray['did']);
     }
@@ -183,13 +184,13 @@
   }
 ?>
 
-<hr>
+
 <!- Photos Starts here->
 
 <div class="btn-group pull-right" role="group" aria-label="...">
 <table><tr><td>
 
-      <form action='up_photo.php' method="post" class="form-register">
+      <form action='choose_photo.php' method="get" class="form-register">
         <input type="hidden" name="uname" value= <?php echo $uname; ?> >
         <input type="submit" value="Upload a Photo!" name="submit" class="btn btn-lg btn-danger form-next">
       </form></td><td>&nbsp;</td><td>
@@ -204,16 +205,60 @@
 <h1><span class="cap">Your Photos:</span></h1>
 <hr style="height:1px;border:none;color:#FFFFFF;background-color:#FFFFFF;" />
 
-  <div class="col-md-3">
-    <div class="thumbnail">
-      <img style="height: 200px" src="images/welcome.jpg" alt="...">
-      <div class="caption">
-        <h3>Thumbnail label</h3>
-        <p>2014-04-19</p>
-      </div>
-    </div>
 
-  </div></div>
+<?php
+
+include("connect.php");
+  foreach (glob("tmp/home_{$uname}_*.jpg") as $filename) {
+    $fn = rtrim($filename,".jpg");
+    unlink($filename);
+  }
+  $sql3="select * from media where mid in (select mid from post_m where username = '{$uname}') order by media_time desc;";  
+  $mediaresult= pg_query($conn, $sql3);
+  $allphoto=pg_fetch_all($mediaresult);
+  $photoNum=count($allphoto);
+  $testarray1 = pg_fetch_array($mediaresult, NULL, PGSQL_BOTH);
+
+  for ($i = 0; $i <= 2; $i++) {
+    if ($photoNum == 1 && $testarray1['mid'] == NULL) { 
+      echo "<h5>You don't have any photos. Upload one!</h5>";
+      break; }
+
+
+    if ($photoNum > $i) {
+      $photoresultarray = pg_fetch_array($mediaresult, $i, PGSQL_BOTH);
+      $data = pg_fetch_result($mediaresult, $i, 'photo');
+      $unes_image = pg_unescape_bytea($data);
+      $file_name = "tmp/home_{$uname}_{$i}.jpg";
+      $img = fopen($file_name, 'wb');
+      fwrite($img, $unes_image);
+      fclose($img);
+
+      $body = $photoresultarray['des_text'];
+      $title = ucfirst(strtolower($photoresultarray['title']));
+      $shortTitle = strlen($title) > 14 ? substr($title, 0, 14) . " ..." : $title;
+      $shortBody = strlen($body) > 50 ? substr($body, 0, 50) . " ..." : $body;
+      $shortDate = substr($photoresultarray['media_time'], 0, 16);
+      ?>
+          <div class='col-lg-3 col-md-3 col-xs-6 thumb text-center'>
+                <a class='thumbnail' href='<?php echo $file_name; ?>'>
+                    <img class='img-responsive' src='<?php echo $file_name; ?>' alt='photo'>
+                    <h3><?php echo $title ?></h3>
+                    <h6><?php echo $shortDate ?></h6>
+                    <h6><?php echo $body ?></h6>
+                    
+                    <button type="button" href='<?php echo $file_name; ?>' class="btn btn-primary btn-sm">View Original</button>
+
+                    </form>
+                </a>
+            </div>
+      <?php
+    }
+  }
+?>
+
+
+</div>
 
 
 

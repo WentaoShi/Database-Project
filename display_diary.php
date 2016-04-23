@@ -45,7 +45,7 @@
       <div class='thumbnail'>
         <div class='caption'>
           <h3><?php echo $title; ?></h3><hr>
-          <h5>Written by:&nbsp;<strong><?php echo $name; ?></strong></h5><br>
+          <h5>Written by:&nbsp;<strong><?php echo $name; ?></strong></h5>
           At:&nbsp;<?php echo $date; ?><hr>
           <p><?php echo $body; ?></p>
           <br>
