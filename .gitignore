@@ -1,0 +1,5 @@
+# Ignore the following files when comming
+
+# database connection
+connect.php
+
