@@ -30,7 +30,7 @@ if($num == 1){
 
    $row=pg_fetch_array($result);
 
-   if($password===$row['pwd'])
+   if(password_verify($password, $row['pwd']))
    { 
     echo "Login Success!";
     header("location: home.php?uname=$uname");

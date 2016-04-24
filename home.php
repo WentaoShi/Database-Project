@@ -82,7 +82,51 @@
 </table>
 
 </form>
+<div class="btn-group pull-right" role="group" aria-label="...">
 
+<h2>
+        <span class="cap">Your Friend Request:</span>
+      <!--<em>Your Friend Request :</em>-->
+    </h2><?php
+
+    $sql3="SELECT * from friend where username2='{$uname}' and status='pending'"; 
+    $rs3=pg_query($conn,$sql3); 
+    $num3=pg_num_rows($rs3);
+    if($num3){
+                ?>
+    <table cellpadding="3" cellspacing="5" border="0" width="200px">
+      <tr>
+        <td>You have <?php echo $num3 ?> friend requests !</td>
+        <td>
+          <input type="button" class="btn btn-sm btn-warning" value="Go to process !"
+          onclick="window.location.href='friend_process.php?uname=<?php echo $uname ?>';" />
+        </td>
+      </tr>
+    </table>
+    <?php
+    }
+    else{
+            ?> 
+    <em>You have no friend request now !</em> <?php
+    }
+    ?>
+
+    <div>
+    <form action='friend_request.php' method="post" class="form-register">
+    <input type="hidden" name="uname" value= <?php echo $uname; ?> >
+    <input type="submit" value="Add Friends" name="submit" class="btn btn-primary btn-danger form-next">
+    </form>
+    <form action='friend_manager.php' method="post" class="form-register">
+    <input type="hidden" name="uname" value= <?php echo $uname; ?> >
+    <input type="submit" value="Friends Manager" name="submit" class="btn btn-primary form-next">
+    </form>
+    </div>
+
+
+</div>
+        
+        <br>
+        <br>
     <h1>
       <span class="cap">Personal Information:</span>
     </h1>
@@ -123,8 +167,6 @@
       </table>
     </form>
     </div>
-<h1><span class="cap">Your friend request:</span></h1><br>
-<h5>Currently you don't have friend request.</h5>
 
     <hr>
     <div class="btn-group pull-right" role="group" aria-label="...">

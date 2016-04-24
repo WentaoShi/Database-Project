@@ -60,8 +60,15 @@
             exit;
             }  
         else{
+
+            $options = [
+                'cost' => 11,
+                'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM),
+            ];
+            $hash_pwd = password_hash($password, PASSWORD_BCRYPT, $options);
+
             $sql = "INSERT INTO users VALUES
-            ('$_POST[uname]', '$_POST[password]', '$_POST[name]', '$_POST[gender]', '$_POST[birthday]', '$_POST[state]','$_POST[city]',  '$_POST[street]', '$_POST[email]');";
+            ('$_POST[uname]', '{$hash_pwd}', '$_POST[name]', '$_POST[gender]', '$_POST[birthday]', '$_POST[state]','$_POST[city]',  '$_POST[street]', '$_POST[email]');";
             if (!pg_query($conn, $sql)){
                 die(pg_last_error());
             }

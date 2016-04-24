@@ -13,7 +13,7 @@ drop table if exists has cascade;
 
 create table if not exists users (
 	username		varchar(20) primary key not null,
-	pwd		varchar(20) not null,  -- needs to be hashed 
+	pwd		varchar(100) not null,  -- needs to be hashed 
 	name		varchar(20),
 	gender		char(1), -- 'm' for male, 'f' for female.
 	birthday	date,
