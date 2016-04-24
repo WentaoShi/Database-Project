@@ -1,3 +1,8 @@
+## Update Apr 24:
+- 修复了通过link输入`./home.php?uname=xxx`可以进入任何人的页面的问题。
+- 用了cookie，运行前要确保浏览器可以接受保存cookie。
+- password已加密。用的`password_hash()` 和 `password_verify`()，php版本必须为5.5以上才能正常运行。
+
 ## Update Apr 20:
 
 写、删除diary，diary列表，在Homepage展示最近三个diary。
