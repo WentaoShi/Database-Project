@@ -99,7 +99,7 @@
         <td>You have <?php echo $num3 ?> friend requests !</td>
         <td>
           <input type="button" class="btn btn-sm btn-warning" value="Go to process !"
-          onclick="window.location.href='process.php?uname=<?php echo $uname ?>';" />
+          onclick="window.location.href='friend_process.php?uname=<?php echo $uname ?>';" />
         </td>
       </tr>
     </table>
