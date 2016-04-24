@@ -17,7 +17,18 @@
     <link href="css/thumbnail-gallery.css" rel="stylesheet">
 <?php
 include("connect.php");
+include("functions/alert.php");
 $uname= $_GET['uname'];
+if (isset($_COOKIE['admin'])) {
+    $admin = $_COOKIE['admin'];
+} else {
+    $admin = "";
+}
+    if ($admin == NULL || $admin != $uname) {
+      setAlert("Please log in.");
+      echo "<div class='text-center'><a href='login.php?' class='btn btn-success btn-lg' role='button'>Go Log in!</a></div>";
+      die;
+    }
 
 
 foreach (glob("tmp/gall_{$uname}_*.jpg") as $filename) {

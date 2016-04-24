@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Delete your diary</title>
+        <title>Log Out</title>
         <script type="text/javascript" src="js/check.js"></script>
         <link href="bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="css/register.css" rel="stylesheet">
@@ -26,24 +26,18 @@
       setAlert("Please log in.");
       echo "<div class='text-center'><a href='login.php?' class='btn btn-success btn-lg' role='button'>Go Log in!</a></div>";
       die;
+    } else {
+        setcookie("admin", NULL, time()-3600);
+        echo setSuccessAlert("You have been successfully logged out. Good Bye!");
+        //header("location: login.php?");
     }
-    $did = $_GET['did'];
-
-    $sql="delete from post_d where did = '{$did}' and username = '{$uname}';";
-    $result = pg_query($conn, $sql);
 
 
-    $sql1="delete from diary where did = '{$did}';";
-
-    $result1 = pg_query($conn, $sql1) or die;
-
-    echo setSuccessAlert("This diary has been deleted.");
+    
 
 ?>
 
 <div class="text-center">
 
-<a href="home.php?uname=<?php echo $uname; ?>" class="btn btn-success btn-lg" role="button">Go Back home!</a>
-<a href="diary_list.php?uname=<?php echo $uname; ?>" class="btn btn-success btn-lg" role="button">Go to your diary list</a>
-
+<a href="login.php?" class="btn btn-success btn-lg" role="button">Go Log in!</a>
 </div>

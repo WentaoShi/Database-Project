@@ -4,6 +4,11 @@
 
     $uname= $_GET['uname'];
     $did = $_GET['did'];
+    if (isset($_COOKIE['admin'])) {
+        $admin = $_COOKIE['admin'];
+    } else {
+        $admin = "";
+    }
 
     $sql="select * from diary where did = '{$did}';";
     $result = pg_query($conn, $sql);
@@ -60,7 +65,12 @@
   <a href="home.php?uname=<?php echo $uname; ?>" class="btn btn-success btn-lg" role="button">Go Back home!</a>
   <input type="hidden" name="uname" value= <?php echo $uname; ?> >
   <input type="hidden" name="did" value= <?php echo $did; ?> >
+  <?php 
+    if ($admin == NULL || $admin != $uname) {
+      
+    } else { ?>
   <input type="submit" value="Delete it" name="submit" class="btn btn-lg btn-danger">
+  <?php } ?>
 </form>
 </div>
 

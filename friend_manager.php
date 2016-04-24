@@ -8,6 +8,12 @@
     $result1 = pg_query($conn, $sql1);
     $arr1 = pg_fetch_array($result1, NULL, PGSQL_BOTH);
     $name = $arr1['name'];
+    $admin = $_COOKIE['admin'];
+    if ($admin == NULL || $admin != $uname) {
+      setAlert("Please log in.");
+      echo "<div class='text-center'><a href='login.php?' class='btn btn-success btn-lg' role='button'>Go Log in!</a></div>";
+      die;
+    }
 
   ?>
   <head>

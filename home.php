@@ -17,10 +17,21 @@
 
   <?php
     include("connect.php");
-
+    include("functions/alert.php");
+    if (isset($_COOKIE['admin'])) {
+        $admin = $_COOKIE['admin'];
+    } else {
+        $admin = "";
+    }
 
     $dir = "images";
     $uname= $_GET['uname'];
+
+    if ($admin == NULL || $admin != $uname) {
+      setAlert("Please log in.");
+      echo "<div class='text-center'><a href='login.php?' class='btn btn-success btn-lg' role='button'>Go Log in!</a></div>";
+      die;
+    }
 
     $sql="SELECT * FROM users WHERE username='{$uname}'";  
     $result= pg_query($conn, $sql);
@@ -28,9 +39,15 @@
 
     ?>
     <div class="container">
+
     <h1>
+    <a href="logout.php?uname=<?php echo $uname; ?>" class="btn btn-warning btn-lg pull-right" role="button">Log out</a>
         <span style="color:#FF0040">Welcome, <?php echo $row['name'] ?>! This is your home page!</span>
     </h1>
+  
+    
+      
+
     <hr class="hr2"></hr>
     
     <div class="col-md-3">

@@ -8,6 +8,12 @@
     $result1 = pg_query($conn, $sql1);
     $arr1 = pg_fetch_array($result1, NULL, PGSQL_BOTH);
     $name = $arr1['name'];
+    if (isset($_COOKIE['admin'])) {
+        $admin = $_COOKIE['admin'];
+    } else {
+        $admin = "";
+    }
+    
   ?>
     <head>
         <title><?php echo $name; ?>'s Diary List</title>
@@ -65,9 +71,13 @@
           <td>{$titlei}</td>
           <td>{$datei}</td>
           <td>
-            <a href='display_diary.php?uname={$uname}&did={$didi}' class='btn btn-info btn-xs' role='button'>&nbsp;View&nbsp;</a>
-            <a href='delete_d.php?uname={$uname}&did={$didi}' class='btn btn-danger btn-xs' role='button'>Delete</a>
-          </td>
+            <a href='display_diary.php?uname={$uname}&did={$didi}' class='btn btn-info btn-xs' role='button'>&nbsp;View&nbsp;</a>";
+            if ($admin == NULL || $admin != $uname) {
+
+            } else {
+              echo 
+            "<a href='delete_d.php?uname={$uname}&did={$didi}' class='btn btn-danger btn-xs' role='button'>Delete</a>";}
+          echo "</td>
         </tr>
       ";
     }

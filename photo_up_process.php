@@ -8,15 +8,26 @@
   <body>
 
 <?php
+include("functions/alert.php");
 $target_dir = "tmp/";
 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 
 $uploadOk = 1;
 $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
 $uname=$_POST['uname'];
+if (isset($_COOKIE['admin'])) {
+    $admin = $_COOKIE['admin'];
+} else {
+    $admin = "";
+}
+    if ($admin == NULL || $admin != $uname) {
+      setAlert("Please log in.");
+      echo "<div class='text-center'><a href='login.php?' class='btn btn-success btn-lg' role='button'>Go Log in!</a></div>";
+      die;
+    }
 $uptype=$_POST['type'];
 
-include("functions/alert.php");
+
 
 
 

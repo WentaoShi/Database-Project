@@ -12,7 +12,19 @@
     </head>
 <body>
 <?php
+include("functions/alert.php");
 $uname= $_POST['uname'];
+if (isset($_COOKIE['admin'])) {
+    $admin = $_COOKIE['admin'];
+} else {
+    $admin = "";
+}
+
+    if ($admin == NULL || $admin != $uname) {
+      setAlert("Please log in.");
+      echo "<div class='text-center'><a href='login.php?' class='btn btn-success btn-lg' role='button'>Go Log in!</a></div>";
+      die;
+    }
  ?>
 <div class="form-register">
 

@@ -31,7 +31,8 @@ if($num == 1){
    $row=pg_fetch_array($result);
 
    if(password_verify($password, $row['pwd']))
-   { 
+   {
+    setcookie("admin", "{$uname}", time()+3600);
     echo "Login Success!";
     header("location: home.php?uname=$uname");
 
