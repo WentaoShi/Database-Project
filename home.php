@@ -29,7 +29,7 @@
     ?>
     <div class="container">
     <h1>
-        <span style="color:orange">Welcome, <?php echo $row['name'] ?>! This is your home page!</span>
+        <span style="color:#FF0040">Welcome, <?php echo $row['name'] ?>! This is your home page!</span>
     </h1>
     <hr class="hr2"></hr>
     
@@ -247,7 +247,7 @@ include("connect.php");
                     <h6><?php echo $shortDate ?></h6>
                     <h6><?php echo $body ?></h6>
                     
-                    <button type="button" href='<?php echo $file_name; ?>' class="btn btn-primary btn-sm">View Original</button>
+                    <button type="button" href='<?php echo $file_name; ?>' class="btn btn-secondary btn-sm">View Original</button>
 
                     </form>
                 </a>

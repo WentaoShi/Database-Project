@@ -61,18 +61,14 @@ $uname= $_POST['uname'];
         </table>
         </div>
 
+<div class="text-center">
+    <button class="btn btn-lg btn-success" type="submit" onclick = "window.location.href='up_diary.php'">Submit this diary</button>
+             <a href='home.php?uname=<?php echo $uname; ?>' class='btn btn-primary btn-lg' role='button'>Go Back home!</a>
 
-        <table cellpadding="2" cellspacing="5" border="0" width="400px" >
-        
-        <tr>
-            <td>
-             <button class="btn btn-lg btn-success btn-block form-center" type="submit" onclick = "window.location.href='up_diary.php'">Submit</button>
-            </td>
-
-        
-        </tr>
-        </table>
+             
+</div>
         </form>
+
         
 </body>
 </html>
