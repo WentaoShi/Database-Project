@@ -51,7 +51,7 @@
    </div>
    <ul class="list-group">
       <li class="list-group-item">Written by <strong> <?php echo $uname; ?> </strong><br>
-      At <?php echo date("Y-m-d  h:m") ?></li>
+      At <?php date_default_timezone_set('America/New_York');echo date("Y-m-d  h:m") ?></li>
       <li class="list-group-item"><?php echo $content; ?></li>
 
    </ul>
