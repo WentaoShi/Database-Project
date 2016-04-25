@@ -13,6 +13,39 @@ include("functions/alert.php");
 $user_src = $_POST['uname'];
 $user_des = $_POST['fname'];
 
+$sql2="SELECT email from users where username='{$fname}'";
+$result2=pg_query($conn,$sql2);
+$row=pg_fetch_row($result2);
+require ("/PHPMailerAutoload.php");
+require_once("PHPMailer/class.phpmailer.php");
+require_once("PHPMailer/class.smtp.php");
+require_once("PHPMailer/language/phpmailer.lang-es.php");
+
+$mail  = new PHPMailer(); 
+
+$mail->CharSet    ="UTF-8";                 
+$mail->IsSMTP();                           
+$mail->SMTPAuth   = true;                   
+$mail->SMTPSecure = "ssl";                  
+//$mail->SMTPDebug = 2;
+$mail->Host       = "smtp.gmail.com";       
+$mail->Port       = 465;                    
+$mail->Username   = "zty213@gmail.com";  
+$mail->Password   = "shanliang";        
+$mail->SetFrom('leronshan@163.com', 'Facebook');    
+$mail->AddReplyTo("leronshan@gmail.com","邮件回复人名称"); 
+                                            
+$mail->Subject    = 'Friend Request ';                     
+$mail->AltBody    = "为了查看该邮件，请切换到支持 HTML 的邮件客户端"; 
+                                            
+$mail->MsgHTML("Hello! you have a friend request from '{$uname}'");                         
+$mail->AddAddress("$row[0]", "my friend");
+//$mail->AddAttachment("images/phpmailer.gif"); // 附件 
+if(!$mail->Send()) {
+    echo "Error" . $mail->ErrorInfo;
+} else {
+    echo "email has sent！";
+}
 // echo $user_src;
 // echo $user_des;
 
