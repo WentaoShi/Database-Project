@@ -66,7 +66,13 @@
   <input type="hidden" name="uname" value= <?php echo $uname; ?> >
   <input type="hidden" name="did" value= <?php echo $did; ?> >
   <?php 
-    if ($admin == NULL || $admin != $uname) {
+    $sql_author = "select username from post_d where did = '{$did}'";
+    $res = pg_query($sql_author);
+    $author = pg_fetch_array($res, 0);
+    $author = $author["username"];
+
+    if ($admin == NULL || $admin != $author) {
+      // echo "no access to change.";
       
     } else { ?>
   <input type="submit" value="Delete it" name="submit" class="btn btn-lg btn-danger">
