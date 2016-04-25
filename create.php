@@ -16,8 +16,15 @@ if (!$conn)
   }
 
 $sql = file_get_contents('./functions/createtable.sql', true);
+$sql2 = file_get_contents('./functions/fetch_friendList.sql', true);
+$sql3 = file_get_contents('./functions/fetch_FofList.sql', true);
+$sql4 = file_get_contents('./functions/fetch_reachedPersonNames.sql', true);
+
 
 if (pg_query($conn, $sql)) {
+	pg_query($conn, $sql2);
+	pg_query($conn, $sql3);
+	pg_query($conn, $sql4);	
     ?><h1> Presentation Start!! </h1>
 <table cellpadding="2" cellspacing="3" border="0" width="80%">
 <tr>
