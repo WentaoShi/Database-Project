@@ -1,8 +1,26 @@
 <html>
+
+<head>
+<title>Feeds:</title>
+<script type="text/javascript" src="js/check.js"></script>
+<link href="bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="css/register.css" rel="stylesheet">
+<meta charset="utf-8">
+</head>
+
   <?php
     include("connect.php");
     include("functions/alert.php");
+    if (isset($_GET['uname'])){
     $uname= $_GET['uname'];
+    } else {
+      die(setAlert("Please Log in."));
+    }
+    if (!$uname){
+      setAlert("Please log in.");
+      echo "<div class='text-center'><a href='login.php?' class='btn btn-success btn-lg' role='button'>Go Log in!</a></div>";
+      die();
+    }
     $sql1="select name from users where username = '{$uname}';";
     $result1 = pg_query($conn, $sql1);
     $arr1 = pg_fetch_array($result1, NULL, PGSQL_BOTH);
@@ -11,23 +29,15 @@
     if ($admin == NULL || $admin != $uname) {
       setAlert("Please log in.");
       echo "<div class='text-center'><a href='login.php?' class='btn btn-success btn-lg' role='button'>Go Log in!</a></div>";
-      die;
+      die();
     }
 
   ?>
 
-<head>
-<title><?php echo $name; ?>'s Feeds:</title>
-<script type="text/javascript" src="js/check.js"></script>
-<link href="bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="css/register.css" rel="stylesheet">
-<meta charset="utf-8">
-</head>
-
 <body>
 
 <!-- List all feeds of friends + FoF of user -->
-<div class="form-register">
+<div class="container">
   <!-- Does user have any friends? If not, there is nothing to show at all -->
   <?php
   // pgsql procedure: FetchFriendNameList
@@ -58,11 +68,24 @@
     pg_query($conn, $sql3);
     pg_query($conn, $sql4); 
     $sql_reachedPerson_diary = "
-      select * from
-      diary natural join
-        (select * from post_d
-        where username in (select reachedPersonNames from FetchReachedPersonNames('{$uname}'))
-        ) as reached_diary; ";
+      select *
+      from
+      (
+        select *
+        from diary natural join
+          (select * from post_d
+          where username in (select * from FetchFriendNameList('{$uname}'))
+          ) as df_diary
+        where visib in ('all', 'f')
+        union
+        select *
+        from diary natural join
+          (select * from post_d
+          where username in (select * from FetchFofNameList('{$uname}'))
+          ) as fof_diary
+        where visib in ('all', 'fof')
+      ) as df_fof_diary
+      order by diary_time DESC; ";
     $query_reachedPersonDiaries = pg_query($conn, $sql_reachedPerson_diary);
     $reachedPersonDiaries = pg_fetch_all($query_reachedPersonDiaries);
   ?>
@@ -82,25 +105,31 @@
   </thead>
   <tbody>
   <?php 
-    for ($i = 1; $i <= count($reachedPersonDiaries); $i++) {
-      $arri = pg_fetch_array($query_reachedPersonDiaries, $i - 1, PGSQL_BOTH);
+    if (pg_num_rows($query_reachedPersonDiaries) < 0){
+      die(setAlert("No Feeds available for you."));
+    }
+
+    for ($i = 0; $i < pg_num_rows($query_reachedPersonDiaries); $i++) {
+      $arri = pg_fetch_array($query_reachedPersonDiaries, $i, PGSQL_BOTH);
       $titlei = $arri['title'];
       $datei = substr($arri['diary_time'], 0, 16);
       $didi=$arri['did'];
       $personi = $arri['username'];
+      $index = $i + 1;
       echo "
         <tr>
-          <th scope='row'>{$i}</th>
+          <th scope='row'>{$index}</th>
           <td>{$titlei}</td>
           <td>{$personi}</td>
           <td>{$datei}</td>
           <td>
-            <a href='display_diary.php?uname={$uname}&did={$didi}' class='btn btn-info btn-xs' role='button'>&nbsp;View&nbsp;</a>";
-            if ($admin == NULL || $admin != $uname) {
+            <a href='display_diary.php?uname={$personi}&did={$didi}' class='btn btn-info btn-xs' role='button'>&nbsp;View&nbsp;</a>
+            ";
+            if ($admin == NULL || $admin != $personi) {
 
             } else {
-            //   echo 
-            // "<a href='delete_d.php?uname={$uname}&did={$didi}' class='btn btn-danger btn-xs' role='button'>Delete</a>";
+              echo 
+            "<a href='delete_d.php?uname={$personi}&did={$didi}' class='btn btn-danger btn-xs' role='button'>Delete</a>";
             }
           echo "</td>
         </tr>

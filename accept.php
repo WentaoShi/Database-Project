@@ -12,7 +12,7 @@ include 'connect.php';
 
 $fID=$_GET['fID'];
 $hID=$_GET['hID'];
-$cir=$_POST['cir'];
+// $cir=$_POST['cir'];
 $sql="UPDATE friend SET status='accepted' where username2='{$hID}' and username='{$fID}'";
 
 if(pg_query($conn,$sql))

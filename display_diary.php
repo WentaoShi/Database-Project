@@ -130,7 +130,13 @@
   <a href="home.php?uname=<?php echo $uname; ?>" class="btn btn-success btn-lg" role="button">Go Back home!</a>
   
   <?php 
-    if ($admin == NULL || $admin != $uname) {
+    $sql_author = "select username from post_d where did = '{$did}'";
+    $res = pg_query($sql_author);
+    $author = pg_fetch_array($res, 0);
+    $author = $author["username"];
+
+    if ($admin == NULL || $admin != $author) {
+      // echo "no access to change.";
       
     } else { ?>
     <input type="hidden" name="uname" value= <?php echo $uname; ?> >
