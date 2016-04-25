@@ -37,7 +37,7 @@
 <body>
 
 <!-- List all feeds of friends + FoF of user -->
-<div class="form-register">
+<div class="container">
   <!-- Does user have any friends? If not, there is nothing to show at all -->
   <?php
   // pgsql procedure: FetchFriendNameList
@@ -72,7 +72,8 @@
       diary natural join
         (select * from post_d
         where username in (select reachedPersonNames from FetchReachedPersonNames('{$uname}'))
-        ) as reached_diary; ";
+        ) as reached_diary
+      order by diary_time DESC; ";
     $query_reachedPersonDiaries = pg_query($conn, $sql_reachedPerson_diary);
     $reachedPersonDiaries = pg_fetch_all($query_reachedPersonDiaries);
   ?>
