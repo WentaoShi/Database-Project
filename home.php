@@ -42,7 +42,9 @@
 
     <h1>
     <a href="logout.php?uname=<?php echo $uname; ?>" class="btn btn-warning btn-lg pull-right" role="button">Log out</a>
-        <span style="color:#FF0040">Welcome, <?php echo $row['name'] ?>! This is your home page!</span>
+    <a href="newfeeds.php?uname=<?php echo $uname;?>" class="btn btn-primary btn-lg pull-left" role="button">Feeds</a>
+    &nbsp;
+    <span style="color:#FF0040">Welcome, <?php echo $row['name'] ?>! This is your home page!</span>
     </h1>
   
     

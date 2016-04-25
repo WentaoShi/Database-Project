@@ -27,9 +27,10 @@
 <div class="form-register">
   <!-- Does user have any friends? -->
   <?php
-
-  $sql = "select * from friend
-          where username = '{$uname}' and status in ('accepted', 'pending');";
+  // pgsql procedure: FetchFriendTable
+  $procedure = file_get_contents('./functions/fetch_friendList.sql');
+  $result = pg_query($conn, $procedure);
+  $sql = "select * from FetchFriendTable('{$uname}');";
   $result = pg_query($conn, $sql);
   $friends_num = pg_num_rows($result);
   if ($friends_num == 0){
@@ -50,12 +51,13 @@
   <?php
     $friends = pg_fetch_all($result);
   ?>
+  <h4>Hi, <?php echo $uname?>, your friends are listed: </h4>
   <table class="table table-hover">
   <thead>
     <tr>
       <th>#</th>
       <th>Username</th>
-      <th>Time (min)</th>
+      <th>Friendship Time (min)</th>
       <th>Option</th>
     </tr>
   </thead>
@@ -65,7 +67,7 @@
     date_default_timezone_set('America/New_York');
     for ($i = 1; $i <= count($friends); $i++) {
       $arri = pg_fetch_array($result, $i - 1, PGSQL_BOTH);
-      $friendi = $arri['username2'];
+      $friendi = $arri['direct_friend'];
       $datei = substr($arri['res_time'], 0, 16);
       $timei = strtotime($datei);
       $timen = time();

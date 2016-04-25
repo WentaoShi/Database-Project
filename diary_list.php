@@ -46,7 +46,7 @@
 
 <div class="form-register">
 <div>
-<h2>View diary:<h2><hr>
+<h2>View diary:</h2><hr>
 
 </div>
 <table class="table table-hover">
