@@ -68,11 +68,23 @@
     pg_query($conn, $sql3);
     pg_query($conn, $sql4); 
     $sql_reachedPerson_diary = "
-      select * from
-      diary natural join
-        (select * from post_d
-        where username in (select reachedPersonNames from FetchReachedPersonNames('{$uname}'))
-        ) as reached_diary
+      select *
+      from
+      (
+        select *
+        from diary natural join
+          (select * from post_d
+          where username in (select * from FetchFriendNameList('{$uname}'))
+          ) as df_diary
+        where visib in ('all', 'f')
+        union
+        select *
+        from diary natural join
+          (select * from post_d
+          where username in (select * from FetchFofNameList('{$uname}'))
+          ) as fof_diary
+        where visib in ('all', 'fof')
+      ) as df_fof_diary
       order by diary_time DESC; ";
     $query_reachedPersonDiaries = pg_query($conn, $sql_reachedPerson_diary);
     $reachedPersonDiaries = pg_fetch_all($query_reachedPersonDiaries);
