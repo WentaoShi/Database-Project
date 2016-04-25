@@ -85,10 +85,16 @@ alter table greeting add constraint friend_gre_FK2 foreign key (username2) refer
 
 create table if not exists comment (
 	cid 		varchar(20),
-	content	varchar(200) not null,
+	did 		varchar(20),
+	mid 		varchar(20),
+	content	varchar(1000) not null,
 	com_time	timestamp with time zone not null,
 	primary key (cid)
 	);
+
+alter table comment add constraint comment_did_FK foreign key (did) references diary (did);
+alter table comment add constraint comment_mid_FK foreign key (mid) references media (mid);
+
 
 create table if not exists post_d (
 	username 		varchar(20) not null,

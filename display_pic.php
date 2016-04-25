@@ -3,7 +3,8 @@
     include("connect.php");
 
     $uname= $_GET['uname'];
-    $did = $_GET['did'];
+    $mid = $_GET['mid'];
+    $file_name = $_GET['file'];
     if (isset($_COOKIE['admin'])) {
         $admin = $_COOKIE['admin'];
     } else {
@@ -16,14 +17,14 @@
       die;
     }
 
-    $sql="select * from diary where did = '{$did}';";
+    $sql="select * from media where mid = '{$mid}';";
     $result = pg_query($conn, $sql);
     $arr = pg_fetch_array($result, NULL, PGSQL_BOTH);
     $title = $arr['title'];
-    $body = $arr['body'];
-    $date = substr($arr['diary_time'], 0, 16);
+    $body = $arr['des_text'];
+    $date = substr($arr['media_time'], 0, 16);
 
-    $sql1="select name, username from users where username = (select username from post_d where did = '{$did}');";
+    $sql1="select name, username from users where username = (select username from post_m where mid = '{$mid}');";
 
 
     $result1 = pg_query($conn, $sql1);
@@ -33,7 +34,7 @@
 
 ?>
     <head>
-        <title>Diary <?php echo $title; ?> by <?php echo $name; ?></title>
+        <title>Photo <?php echo $title; ?> by <?php echo $name; ?></title>
         <script type="text/javascript" src="js/check.js"></script>
         <link href="bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="css/register.css" rel="stylesheet">
@@ -49,17 +50,20 @@
 
 <div class="form-register">
 <div>
-<h2>View diary:<h2><hr>
+<h2>View photo:<h2><hr>
 
 </div>
 
     <div class='col-md-12'>&nbsp;
       <div class='thumbnail'>
-        <div class='caption'>
-          <h3><?php echo $title; ?></h3><hr>
-          <h5>Written by:&nbsp;<strong><a href="visithome.php?uname=<?php echo $author; ?>"><?php echo $name; ?></a></strong></h5>
+        <div class='caption text-center'>
+        <img src='<?php echo $file_name; ?>' class='img-thumbnail' alt='<?php echo $title; ?>'>
+
+          <h3><?php echo $title; ?></h3>
+          <a href='<?php echo $file_name; ?>' class="btn btn-success btn-xs" role="button">View Original</a>
+          <h5>by:&nbsp;<strong><a href="visithome.php?uname=<?php echo $author; ?>"><?php echo $name; ?></a></strong></h5>
           At:&nbsp;<?php echo $date; ?><hr>
-          <p><?php echo $body; ?></p>
+          <?php echo $body; ?>
           <br>
         </div>
       </div>
@@ -68,12 +72,12 @@
 <!-Comments display->
 
 <?php
-    $sql2="select * from comment where did = '{$did}' order by com_time desc;";
+    $sql2="select * from comment where mid = '{$mid}' order by com_time desc;";
     $result2 = pg_query($conn, $sql2);
     $allcomment = pg_fetch_all($result2);
     $com_arr = pg_fetch_array($result2, NULL, PGSQL_BOTH);
     if ($com_arr == NULL) {
-      echo "No comment.";
+      echo "<strong>This photo has no comment. You can write one!</strong>";
     } else {
       ?>
       <div class="panel panel-success">
@@ -110,8 +114,9 @@
 <form action="up_comment.php" method="post" class="form-register">
 <input type="hidden" name="uname" value= <?php echo $uname; ?> >
 <input type="hidden" name="comment_sender" value= <?php echo $admin; ?> >
-<input type="hidden" name="did" value= <?php echo $did; ?> >
-<input type="hidden" name="type" value='diary' >
+<input type="hidden" name="mid" value= <?php echo $mid; ?> >
+<input type="hidden" name="file" value= <?php echo $file_name; ?> >
+<input type="hidden" name="type" value='media' >
 <table>
         <tr>
             <td>Write a comment:</td>
@@ -134,7 +139,7 @@
       
     } else { ?>
     <input type="hidden" name="uname" value= <?php echo $uname; ?> >
-    <input type="hidden" name="did" value= <?php echo $did; ?> >
+    <input type="hidden" name="mid" value= <?php echo $mid; ?> >
     <input type="submit" value="Delete This Diary" name="submit" class="btn btn-lg btn-danger">
   <?php } ?>
 </form>

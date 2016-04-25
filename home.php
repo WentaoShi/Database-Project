@@ -300,18 +300,24 @@ include("connect.php");
       $shortTitle = strlen($title) > 14 ? substr($title, 0, 14) . " ..." : $title;
       $shortBody = strlen($body) > 50 ? substr($body, 0, 50) . " ..." : $body;
       $shortDate = substr($photoresultarray['media_time'], 0, 16);
+      $mid = $photoresultarray['mid'];
       ?>
           <div class='col-lg-3 col-md-3 col-xs-6 thumb text-center'>
-                <a class='thumbnail' href='<?php echo $file_name; ?>'>
+                <div class='thumbnail'>
                     <img class='img-responsive' src='<?php echo $file_name; ?>' alt='photo'>
                     <h3><?php echo $title ?></h3>
                     <h6><?php echo $shortDate ?></h6>
                     <h6><?php echo $body ?></h6>
-                    
-                    <button type="button" href='<?php echo $file_name; ?>' class="btn btn-secondary btn-sm">View Original</button>
+
+                    <form action='display_pic.php' method='get' class='form-register'>
+                    <input type='hidden' name='uname' value='<?php echo $uname ?>'>
+                    <input type='hidden' name='mid' value='<?php echo $mid ?>'>
+                    <input type='hidden' name='file' value='<?php echo $file_name ?>'>
+                    <input type='submit' value='View this photo' name='submit' class='btn btn-sm btn-sencondary btn-block form-next'>
+                    </form>
 
                     </form>
-                </a>
+                </div>
             </div>
       <?php
     }

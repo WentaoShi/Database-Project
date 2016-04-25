@@ -29,7 +29,7 @@ $dst_h = 240;
     //unlink("tmp/{$uname}_{$i}.jpg");
 ?>
                 <div class='col-lg-3 col-md-4 col-xs-6 thumb text-center'>
-                <a class='thumbnail' href='<?php echo $file_name; ?>'>
+                <a class='thumbnail' href='display_pic.php?file=<?php echo $file_name; ?>&mid=<?php echo $mid; ?>&uname=<?php echo $uname; ?>'>
                     <img class='img-responsive' src='<?php echo $file_name; ?>' alt='photo'>
                     <h3><?php echo $title ?></h3>
                     <h6><?php echo $date ?></h6>
