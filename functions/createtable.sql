@@ -29,9 +29,7 @@ create table if not exists users (
 create table if not exists profile (
 	pid		varchar(20) primary key not null,
 	content	varchar(500),
-	time_stamp	timestamp with time zone not null,
-	visible_group	varchar(20),
-	check (visible_group in ('everyone', 'friend', 'fof'))
+	time_stamp	timestamp with time zone not null
 	);
 
 

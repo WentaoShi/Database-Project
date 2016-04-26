@@ -115,7 +115,9 @@
           <tr>
             <th scope='row'>{$index}</th>
             <td>{$titlei}</td>
-            <td>{$personi}</td>
+            <td>
+              <a href='visithome.php?uname={$personi}'>{$personi}</a>
+            </td>
             <td>{$datei}</td>
             <td>
               <a href='display_diary.php?uname={$personi}&did={$didi}' class='btn btn-info btn-xs' role='button'>&nbsp;View&nbsp;</a>
@@ -133,6 +135,7 @@
     }
 
    ?>
+
   </tbody>
 </table>
 </div> <!-- col-lg-6 of diaries ends here -->
@@ -168,7 +171,9 @@
           <tr>
             <th scope='row'>{$index}</th>
             <td>{$titlei}</td>
-            <td>{$personi}</td>
+            <td>
+              <a href='visithome.php?uname={$personi}'>{$personi}</a>
+            </td>
             <td>{$datei}</td>
             <td>
               <a href='display_pic.php?uname={$uname}&mid={$midi}&type=feeds' class='btn btn-info btn-xs' role='button'>&nbsp;View&nbsp;</a>

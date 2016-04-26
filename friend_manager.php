@@ -85,7 +85,9 @@
           <th scope='row'>{$i}</th>
           <td>{$friendi}</td>
           <td>{$duration}</td>
-          <td>";
+          <td>
+          <a href='visithome.php?uname={$friendi}' class='btn btn-info btn-xs' role='button'>View Homepage</a>
+          ";
             if ($admin == NULL || $admin != $uname) {
 
             } else {

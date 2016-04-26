@@ -74,15 +74,39 @@
 
        ?>
 
+<!-Profile Starts here->
+<?php
+        $sql_p="SELECT * FROM profile WHERE pid in (select pid from post_p where username = '{$uname}') order by time_stamp desc;"; 
+
+        $pro_result= pg_query($conn, $sql_p);
+        $pro_resultarray = pg_fetch_array($pro_result, NULL, PGSQL_BOTH);
+        if($pro_resultarray['pid'] != NULL) {
+          echo "<h5>{$pro_resultarray['content']}</h5>";
+        } else {
+          echo setAlert("No profiles here.");
+        }
+
+?>
+<!-Write a Profile->
+<form action="up_profile.php" method="post" class="form-register">
+<input type="hidden" name="uname" value= <?php echo $admin; ?> >
+<span style="color:#FF717E"><h5>Say somethin' (Your profile):</h5></span>
+<textarea name="content" rows="2" cols="39"></textarea>
+<input type="submit" value="Post saying" name="submit" class="btn btn-sm btn-warning btn-block">
+<a href="profile.php?host=<?php echo $uname; ?>" class="btn btn-info btn-sm btn-block" role="button">View all your saying</a>
+</form>
+
+
+
 <table>
 <form action="photo_up_process.php" method="post" enctype="multipart/form-data" class="form-register">
 
   <tr><td>
       <?php 
         if($resultarray['user_photo'] != NULL) {
-          echo "<p><h5><span class='cap'>Change your profile photo!</h5></span></td>";
+          echo "<p><h5><span style='color:#FF717E'>Change your profile photo!</h5></span></td>";
         } else {
-          echo "<p><h5><span class='cap'>Upload your profile photo!</h5></span></td>";
+          echo "<p><h5><span style='color:#FF717E'>Upload your profile photo!</h5></span></td>";
         }
 
        ?>
