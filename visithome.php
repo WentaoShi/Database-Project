@@ -180,9 +180,42 @@
 
 
 <!- Thumbnails Starts here->
+<!- FetchFeeds->
 <?php 
   include("connect.php");
   include("functions/thumbnail.php");
+
+  $procedure = file_get_contents('./functions/fetch_friendList.sql');
+  $result = pg_query($conn, $procedure);
+  $sql = "select * from FetchFriendNameList('{$admin}');";
+  $result = pg_query($conn, $sql);
+  $friends_num = pg_num_rows($result);
+  if ($friends_num == 0){
+    // setAlert("No friends yet... How about add new friends?");
+  }
+
+  $sql2 = file_get_contents('./functions/fetch_friendList.sql', true);
+  $sql3 = file_get_contents('./functions/fetch_FofList.sql', true);
+  $sql4 = file_get_contents('./functions/fetch_reachedPersonNames.sql', true);
+  pg_query($conn, $sql2);
+  pg_query($conn, $sql3);
+  pg_query($conn, $sql4);
+  $sql_feedsDiary = file_get_contents('./functions/fetch_feeds.sql', true);
+  pg_query($conn, $sql_feedsDiary); // procedure: FetchFeedsXXXX4Me
+
+  $sql_reachedPerson_diary = "select * from FetchFeedsDiary4Me('{$admin}')";
+  $query_reachedPersonDiaries = pg_query($conn, $sql_reachedPerson_diary);
+  $reachedPersonDiaries = pg_fetch_all($query_reachedPersonDiaries);
+
+  $sql_reachedPerson_media = "select * from FetchFeedsMedia4Me('{$admin}')";
+  $query_reachedPersonMedia = pg_query($conn, $sql_reachedPerson_media);
+  $reachedPersonMedia = pg_fetch_all($query_reachedPersonMedia);
+
+//echo "<pre>" . print_r($reachedPersonDiaries) . "</pre>";
+
+//echo print_r($reachedPersonMedia);
+
+
   $sql2="select * from diary where did in (select did from post_d where username = '{$uname}') order by diary_time desc;";  
   $diaryresult= pg_query($conn, $sql2);
   $alldiary=pg_fetch_all($diaryresult);

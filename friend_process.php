@@ -27,11 +27,14 @@ $uname=$_GET['uname'];
     echo "<center><h1> Your friend requests:</h1></center>";
 
 
-$sql="SELECT * from friend where username2='{$uname}' and status='pending'"; 
+$sql="SELECT * from friend where username2='{$uname}' and status='pending';"; 
+
 $rs=pg_query($conn,$sql);
 $num=pg_num_rows($rs);
-if (pg_fetch_array($rs) == NULL) {
+
+if ($num == 0) {
         echo "<br><center><strong>You don't have friend request.</strong></center>";
+        
     }
 	while($row=pg_fetch_array($rs)){
     	

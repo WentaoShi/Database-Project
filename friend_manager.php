@@ -24,7 +24,7 @@
 
   ?>
   <head>
-    <title><?php echo $name; ?>'s Friends Requests:</title>
+    <title><?php echo $name; ?>'s Friends</title>
     <script type="text/javascript" src="js/check.js"></script>
     <link href="bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/register.css" rel="stylesheet">
