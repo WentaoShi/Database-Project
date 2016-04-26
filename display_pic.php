@@ -1,10 +1,13 @@
 <html>
   <?php
     include("connect.php");
-
-    $uname= $_GET['uname'];
     $mid = $_GET['mid'];
-    $file_name = $_GET['file'];
+    $uname= $_GET['uname'];
+    if (isset($_GET['type']) and $_GET['type'] == 'feeds'){
+      // ready to display photos directed from newfeeds.php
+    } else{
+      $file_name = $_GET['file'];
+    }
     if (isset($_COOKIE['admin'])) {
         $admin = $_COOKIE['admin'];
     } else {
@@ -32,6 +35,18 @@
     $arr1 = pg_fetch_array($result1, NULL, PGSQL_BOTH);
     $name = $arr1['name'];
     $author = $arr1['username'];
+
+    if (isset($_GET['type']) and $_GET['type'] == 'feeds'){
+      $sql = "select * from media where mid='{$mid}'";
+      $res = pg_query($conn, $sql);
+      $tup = pg_fetch_array($res, NULL, PGSQL_BOTH);
+      $photo_dbObj = $tup['photo'];
+      $photo_data = pg_unescape_bytea($photo_dbObj);
+      $file_name = "tmp/feeds_{$admin}_active.jpg";
+      $photo_handle = fopen($file_name, 'wb');
+      fwrite($photo_handle, $photo_data);
+    }
+
 
 ?>
     <head>
@@ -136,12 +151,13 @@
   <a href="home.php?uname=<?php echo $uname; ?>" class="btn btn-success btn-lg" role="button">Go Back home!</a>
   
   <?php 
-    if ($admin == NULL || $admin != $uname) {
-      
+
+    if ($admin == NULL || $admin != $author) {
+
     } else { ?>
-    <input type="hidden" name="uname" value= <?php echo $uname; ?> >
+    <input type="hidden" name="uname" value= <?php echo $author; ?> >
     <input type="hidden" name="mid" value= <?php echo $mid; ?> >
-    <input type="submit" value="Delete This Diary" name="submit" class="btn btn-lg btn-danger">
+    <input type="submit" value="Delete This Photo" name="submit" class="btn btn-lg btn-danger">
   <?php } ?>
 </form>
 
