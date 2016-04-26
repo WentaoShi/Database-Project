@@ -22,7 +22,7 @@
       echo "<div class='text-center'><a href='login.php?' class='btn btn-success btn-lg' role='button'>Go Log in!</a></div>";
       die;
     }
-    $fname = $_GET['username2']
+    $fname = $_GET['username2'];
 
     $sql = "delete from friend
             where ((username='{$uname}' and username2='{$fname}')
@@ -31,7 +31,7 @@
     $res = pg_query($conn, $sql);
 
     if ($res){
-      setSuccessAlert("This diary has been deleted.");
+      setSuccessAlert("User '{$fname}' has been deleted from your friend lists.");
     } else {
       setAlert("None friends exists");
     }
@@ -43,6 +43,5 @@
 <div class="text-center">
 
 <a href="home.php?uname=<?php echo $uname; ?>" class="btn btn-success btn-lg" role="button">Go Back home!</a>
-<a href="diary_list.php?uname=<?php echo $uname; ?>" class="btn btn-success btn-lg" role="button">Go to your diary list</a>
 
 </div>
