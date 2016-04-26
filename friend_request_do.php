@@ -13,6 +13,33 @@ include("functions/alert.php");
 $user_src = $_POST['uname'];
 $user_des = $_POST['fname'];
 
+
+// echo $user_src;
+// echo $user_des;
+
+// Whether $user_des existed?
+$sql = "select username from users where username = '{$user_des}'";
+$res = pg_query($conn, $sql);
+if (pg_num_rows($res) == 0){
+  setAlert("No users named: {$user_des}");
+  $sql = "select username from users where username like '%{$user_des}%'";
+  $res = pg_query($conn, $sql);
+  if (pg_num_rows($res) > 0) {
+    echo "<br><div class = 'text-center'>";
+    echo "<p><strong>Perhaps you are looking for the following users?</strong></p>";
+    for ($i = 0; $i < pg_num_rows($res); $i ++){
+      $rowi = pg_fetch_array($res, $i, PGSQL_BOTH);
+      echo $rowi['username']; 
+      echo "&nbsp;";
+      if ($i % 10 == 0) {
+        echo "<br>";
+      }
+    }
+    echo "</div>";
+  }
+  die();
+}
+
 $sql2="SELECT email from users where username='{$user_des}'";
 $result2=pg_query($conn,$sql2);
 $row=pg_fetch_row($result2);
@@ -48,31 +75,6 @@ if(!$mail->Send()) {
     // echo "Error" . $mail->ErrorInfo;
 } else {
     setSuccessAlert("Email has sent!");
-}
-// echo $user_src;
-// echo $user_des;
-
-// Whether $user_des existed?
-$sql = "select username from users where username = '{$user_des}'";
-$res = pg_query($conn, $sql);
-if (pg_num_rows($res) == 0){
-  setAlert("No users named: {$user_des}");
-  $sql = "select username from users where username like '%{$user_des}%'";
-  $res = pg_query($conn, $sql);
-  if (pg_num_rows($res) > 0) {
-    echo "<br><div class = 'text-center'>";
-    echo "<p><strong>Perhaps you are looking for the following users?</strong></p>";
-    for ($i = 0; $i < pg_num_rows($res); $i ++){
-      $rowi = pg_fetch_array($res, $i, PGSQL_BOTH);
-      echo $rowi['username']; 
-      echo "&nbsp;";
-      if ($i % 10 == 0) {
-        echo "<br>";
-      }
-    }
-    echo "</div>";
-  }
-  die();
 }
 
 if ($user_src == $user_des){
