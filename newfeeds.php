@@ -54,10 +54,10 @@
   if ($friends_num == 0){
     setAlert("No friends yet... How about add new friends?");
   ?>
-  <div>
-  <form action='friend_request.php' method="post" class="form-center">
+  <div class="text-center">
+  <form action='friend_request.php' method="post">
   <input type="hidden" name="uname" value= <?php echo $uname; ?> >
-  <input type="submit" value="Add Friends" name="submit" class="btn btn-primary btn-danger form-next">
+  <input type="submit" value="Add Friends" name="submit" class="btn btn-lg btn-primary btn-success">
   </form>
   </div>
   <?php

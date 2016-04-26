@@ -14,8 +14,8 @@
         $admin = "";
     }
 
-    if ($admin == NULL || $admin != $uname) {
-      setAlert("Please log in.");
+    if ($admin == NULL) {
+      echo setAlert("Please log in.");
       echo "<div class='text-center'><a href='login.php?' class='btn btn-success btn-lg' role='button'>Go Log in!</a></div>";
       die;
     }
@@ -85,9 +85,15 @@
           <th scope='row'>{$i}</th>
           <td>{$friendi}</td>
           <td>{$duration}</td>
-          <td>
-            <a href='friend_delete.php?username={$uname}&username2={$friendi}' class='btn btn-danger btn-xs' role='button'>Delete</a>
-          </td>
+          <td>";
+            if ($admin == NULL || $admin != $uname) {
+
+            } else {
+              echo "<a href='friend_delete.php?username={$uname}&username2={$friendi}' class='btn btn-danger btn-xs' role='button'>Delete</a>";
+            }
+            
+
+          "</td>
         </tr>
       ";
     }

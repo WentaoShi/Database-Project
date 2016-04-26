@@ -8,6 +8,7 @@
 
   <body>
     <?php
+    include("functions/alert.php");
       $uname= $_GET['uname'];
       if (isset($_COOKIE['admin'])) {
           $admin = $_COOKIE['admin'];

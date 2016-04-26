@@ -47,8 +47,7 @@ $dst_h = 240;
 <?php
   	}
   } else {
-    include("functions/alert.php");
-  	echo setAlert("You don't have photos.");
+  	echo setAlert("No photos here.");
   }
 
 

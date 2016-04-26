@@ -54,12 +54,31 @@
         </div><!-- /input-group -->
       </form>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="greeting.php?uname=<?php echo $admin; ?>">Greeting <span class="badge">2</span></a>
+        <li> 
+        <!-- get number of unread greeting -->
+        <?php
+
+          include("connect.php");
+          $sql2="select * from greeting where username2 = '{$admin}' and status = 'unread';";  
+          $greetingresult= pg_query($conn, $sql2);
+          $alluread=pg_fetch_all($greetingresult);
+          $unreadNum =count($alluread);
+
+          if ($alluread == NULL) {
+            echo "<a href='greeting.php?host={$admin}'>Greeting";
+          } else {
+            echo "<a href='greeting.php?host={$admin}&unread={$unreadNum}'>Greeting ";
+            echo " <span class='badge'>{$unreadNum}</span>";
+          }
+
+        ?>
+
+        </a>
         </li>
         <li><a href="newfeeds.php?uname=<?php echo $admin; ?>"><strong><span style="color:#FF717E">Feeds!</span></strong></a></li>
         <li><a href="logout.php?uname=<?php echo $admin; ?>">Log Out</a></li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Setting<span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <?php echo $admin ?><span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="#">Change Password</a></li>
             <li><a href="#">Change Profile</a></li>

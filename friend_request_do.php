@@ -47,7 +47,7 @@ if(!$mail->Send()) {
 
     // echo "Error" . $mail->ErrorInfo;
 } else {
-    setSuccessAlert("Email has sent！");
+    setSuccessAlert("Email has sent!");
 }
 // echo $user_src;
 // echo $user_des;
@@ -87,7 +87,7 @@ if ($tuple['status'] == 'pending'){
   die(setAlertWithBackButton("You have already sent request. Please Wait for respond from {$user_des}", "Go Back"));
 }
 if ($tuple['status'] == 'accepted'){
-  die(setSuccessAlertWithBackButton("A-hah, {$user_des} is your friend already.", "Go Back"));
+  die(setSuccessAlertWithHistoryBackButton("A-hah, {$user_des} is your friend already.", "Go Back"));
 }
 if ($tuple['status'] == 'declined'){
   die(setAlertWithBackButton("Oops, you once were decliend.", "Go Back"));
@@ -99,6 +99,6 @@ if(!$result){
   die(setAlertWithBackButton(pg_last_error(), "Go Back"));
 
 } else{
-  echo setSuccessAlertWithBackButton("Great! You request has been sent!", "Go Back");
+  echo setSuccessAlertWithHistoryBackButton("Great! You request has been sent!", "Go Back");
 }
 ?>

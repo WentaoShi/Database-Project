@@ -1,6 +1,7 @@
 <html>
   <?php
     include("connect.php");
+    include("functions/alert.php");
 
     $uname= $_GET['uname'];
     $did = $_GET['did'];

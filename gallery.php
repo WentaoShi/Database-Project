@@ -3,17 +3,6 @@
 
 <head>
 
-    <title>Your Gallery</title>
-    <script type="text/javascript" src="js/dropdown.js"></script>
-    <link href="bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="css/mycss.css" rel="stylesheet" />
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="A home page of the website.">
-    <meta name="author" content="Wentao Shi">
-
 <?php
 include("connect.php");
 include("functions/alert.php");
@@ -23,7 +12,7 @@ if (isset($_COOKIE['admin'])) {
 } else {
     $admin = "";
 }
-    if ($admin == NULL || $admin != $uname) {
+    if ($admin == NULL) {
       setAlert("Please log in.");
       echo "<div class='text-center'><a href='login.php?' class='btn btn-success btn-lg' role='button'>Go Log in!</a></div>";
       die;
@@ -34,11 +23,27 @@ foreach (glob("tmp/gall_{$uname}_*.jpg") as $filename) {
     $fn = rtrim($filename,".jpg");
     unlink($filename);
 }
-
-
-
-
 ?>
+<?php if ($admin == $uname) {
+    ?>
+    <title>Your Gallery</title>
+ <?php
+} else {?>
+    <title><?php echo $uname; ?>'s Gallery</title>
+
+ <?php
+} ?>
+
+    <script type="text/javascript" src="js/dropdown.js"></script>
+    <link href="bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/mycss.css" rel="stylesheet" />
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A home page of the website.">
+    <meta name="author" content="Wentao Shi">
+
 
 </head>
 
@@ -48,13 +53,26 @@ foreach (glob("tmp/gall_{$uname}_*.jpg") as $filename) {
     <div class="container">
 
         <div class="row">
+
+            <?php if ($admin == $uname) {
+                ?>
                 <h1>Your Gallery</h1>
+             <?php
+            } else {?>
+                <h1><?php echo $uname; ?>'s Gallery</h1>
+
+             <?php
+            } ?>
             <hr>
             <?php
             include("functions/readpic.php");
 ?>
 
         </div >
+
+<?php if ($admin == $uname) {
+    ?>
+
         <div class='text-center'>
         <form action='choose_photo.php' method="get" class="form-register">
         <input type="hidden" name="uname" value= <?php echo $uname; ?> >
@@ -62,6 +80,14 @@ foreach (glob("tmp/gall_{$uname}_*.jpg") as $filename) {
       
         <a href='home.php?uname=<?php echo $uname; ?>' class='btn btn-success btn-lg' role='button'>Go Back home!</a>
         <hr></div></form>
+ <?php
+} else {?>
+        <div class='text-center'>
+        <button type='button' class='btn btn-info btn-lg' onClick='history.go(-1);return true;'>Go Back</button></div>
+ <?php
+} ?>
+
+
 
         <!-- Footer -->
         <footer>

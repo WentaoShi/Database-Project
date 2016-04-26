@@ -1,4 +1,7 @@
 <html>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<js/jquery.min.js"><\/script>')</script>
+    <script src="js/bootstrap.min.js"></script>
   <?php
     include("connect.php");
     include("functions/alert.php");
@@ -34,7 +37,7 @@
     $alldiary=pg_fetch_all($result);
     $arr = pg_fetch_array($result, NULL, PGSQL_BOTH);
     if ($arr == NULL) {
-      die(setAlert("Sorry. This user don't have diaries."));
+      die(setAlertWithBackButton("Sorry. This user don't have diaries.", "Go Back"));
     }
 
 
@@ -93,9 +96,6 @@
 </div>
 
 </div>
-  <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<js/jquery.min.js"><\/script>')</script>
-    <script src="js/bootstrap.min.js"></script>
+
 </body>
     </html>
