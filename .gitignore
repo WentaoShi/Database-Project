@@ -2,4 +2,6 @@
 
 # database connection
 connect.php
+tmp/*
+profile_pic/*
 
