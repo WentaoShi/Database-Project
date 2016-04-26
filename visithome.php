@@ -200,47 +200,53 @@
   pg_query($conn, $sql2);
   pg_query($conn, $sql3);
   pg_query($conn, $sql4);
-  $sql_feedsDiary = file_get_contents('./functions/fetch_feeds.sql', true);
+  $sql_feedsDiary = file_get_contents('./functions/fetch_hosts_visithome.sql', true);
   pg_query($conn, $sql_feedsDiary); // procedure: FetchFeedsXXXX4Me
 
-  $sql_reachedPerson_diary = "select * from FetchFeedsDiary4Me('{$admin}')";
+  $sql_reachedPerson_diary = "select * from FetchHostsFeedsDiary4Me('{$admin}', '{$host}')";
+
   $query_reachedPersonDiaries = pg_query($conn, $sql_reachedPerson_diary);
   $reachedPersonDiaries = pg_fetch_all($query_reachedPersonDiaries);
 
-  $sql_reachedPerson_media = "select * from FetchFeedsMedia4Me('{$admin}')";
+  $sql_reachedPerson_media = "select * from FetchHostsFeedsMedia4Me('{$admin}', '{$host}')";
   $query_reachedPersonMedia = pg_query($conn, $sql_reachedPerson_media);
   $reachedPersonMedia = pg_fetch_all($query_reachedPersonMedia);
 
-//echo "<pre>" . print_r($reachedPersonDiaries) . "</pre>";
+// echo print_r($reachedPersonDiaries) . "\n";
 
-//echo print_r($reachedPersonMedia);
+// echo print_r($reachedPersonMedia);
 
 
-  $sql2="select * from diary where did in (select did from post_d where username = '{$uname}') order by diary_time desc;";  
-  $diaryresult= pg_query($conn, $sql2);
-  $alldiary=pg_fetch_all($diaryresult);
-  $diaryNum=count($alldiary);
-  $testarray = pg_fetch_array($diaryresult, NULL, PGSQL_BOTH);
+
+
+  $diaryNum=count($reachedPersonDiaries);
+  $testarray = pg_fetch_array($query_reachedPersonDiaries, NULL, PGSQL_BOTH);
 
   for ($i = 0; $i <= 2; $i++) {
     if ($diaryNum == 1 && $testarray['did'] == NULL) { 
-      echo "<h5>You don't have any diaries. Write one!</h5>";
+      echo "<h5>No diaries.</h5>";
       break; }
 
-
     if ($diaryNum > $i) {
-      $diaryresultarray = pg_fetch_array($diaryresult, $i, PGSQL_BOTH);
-      $body = $diaryresultarray['body'];
+      $diaryresultarray = pg_fetch_array($query_reachedPersonDiaries, $i, PGSQL_BOTH);
+      $did = $diaryresultarray['did'];
+      $sql_diary = "select * from diary where did = '{$did}';";
+      $result_diary = pg_query($conn, $sql_diary);
+      $result_diary_arr = pg_fetch_array($result_diary, 0, PGSQL_BOTH);
+
+      $body = $result_diary_arr['body'];
       if (strlen($body) <= 30) {
-      	$body .= "<br><br><br>";
+        $body .= "<br><br><br>";
       } else if (strlen($body) <= 70) {
-      	$body .= "<br><br>";
+        $body .= "<br><br>";
       }
       $title = ucfirst(strtolower($diaryresultarray['title']));
       $shortTitle = strlen($title) > 14 ? substr($title, 0, 14) . " ..." : $title;
       $shortBody = strlen($body) > 90 ? substr($body, 0, 90) . " ..." : $body;
       $shortDate = substr($diaryresultarray['diary_time'], 0, 16);
       echo textThumbnail($shortTitle, $shortDate, $shortBody, $uname, $diaryresultarray['did']);
+
+      
     }
   }
   if ($diaryNum < 3 && $testarray['did'] != NULL) {
@@ -272,11 +278,9 @@ include("connect.php");
     $fn = rtrim($filename,".jpg");
     unlink($filename);
   }
-  $sql3="select * from media where mid in (select mid from post_m where username = '{$uname}') order by media_time desc;";  
-  $mediaresult= pg_query($conn, $sql3);
-  $allphoto=pg_fetch_all($mediaresult);
-  $photoNum=count($allphoto);
-  $testarray1 = pg_fetch_array($mediaresult, NULL, PGSQL_BOTH);
+  $photoNum=count($reachedPersonMedia);
+  $testarray1 = pg_fetch_array($query_reachedPersonMedia, NULL, PGSQL_BOTH);
+
 
   for ($i = 0; $i <= 2; $i++) {
     if ($photoNum == 1 && $testarray1['mid'] == NULL) { 
@@ -285,15 +289,21 @@ include("connect.php");
 
 
     if ($photoNum > $i) {
-      $photoresultarray = pg_fetch_array($mediaresult, $i, PGSQL_BOTH);
-      $data = pg_fetch_result($mediaresult, $i, 'photo');
+      $photoresultarray = pg_fetch_array($query_reachedPersonMedia, $i, PGSQL_BOTH);
+      $mid = $photoresultarray['mid'];
+
+      $sql_photo = "select * from media where mid = '{$mid}';";
+      $result_photo = pg_query($conn, $sql_photo);
+      $result_photo_arr = pg_fetch_array($result_photo, 0, PGSQL_BOTH);
+
+      $data = $result_photo_arr['photo'];
       $unes_image = pg_unescape_bytea($data);
       $file_name = "tmp/home_{$uname}_{$i}.jpg";
       $img = fopen($file_name, 'wb');
       fwrite($img, $unes_image);
       fclose($img);
 
-      $body = $photoresultarray['des_text'];
+      $body = $result_photo_arr['des_text'];
       $title = ucfirst(strtolower($photoresultarray['title']));
       $shortTitle = strlen($title) > 14 ? substr($title, 0, 14) . " ..." : $title;
       $shortBody = strlen($body) > 50 ? substr($body, 0, 50) . " ..." : $body;
