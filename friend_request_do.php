@@ -13,6 +13,42 @@ include("functions/alert.php");
 $user_src = $_POST['uname'];
 $user_des = $_POST['fname'];
 
+$sql2="SELECT email from users where username='{$user_des}'";
+$result2=pg_query($conn,$sql2);
+$row=pg_fetch_row($result2);
+require("PHPMailer/PHPMailerAutoload.php");
+require_once("PHPMailer/class.phpmailer.php");
+require_once("PHPMailer/class.smtp.php");
+require_once("PHPMailer/language/phpmailer.lang-es.php");
+
+$mail  = new PHPMailer(); 
+
+$mail->CharSet    ="UTF-8";                 
+$mail->IsSMTP();                           
+$mail->SMTPAuth   = true;                   
+$mail->SMTPSecure = "ssl";                  
+//$mail->SMTPDebug = 2;
+$mail->Host       = "smtp.gmail.com";       
+$mail->Port       = 465;                    
+$mail->Username   = "zty213@gmail.com";  
+$mail->Password   = "shanliang";        
+$mail->SetFrom('leronshan@163.com', 'Facebook');    
+$mail->AddReplyTo("leronshan@gmail.com","邮件回复人名称"); 
+                                            
+$mail->Subject    = 'Friend Request ';                     
+$mail->AltBody    = "为了查看该邮件，请切换到支持 HTML 的邮件客户端"; 
+                                            
+$mail->MsgHTML("Hello! you have a friend request from '{$user_src}'");                         
+$mail->AddAddress("$row[0]", "my friend");
+//$mail->AddAttachment("images/phpmailer.gif"); // 附件 
+if(!$mail->Send()) {
+  setAlert($mail->ErrorInfo);
+  die(setAlert("Cannot get contacted via email | Your friend did not tell us his/her email. Oops."));
+
+    // echo "Error" . $mail->ErrorInfo;
+} else {
+    setSuccessAlert("Email has sent！");
+}
 // echo $user_src;
 // echo $user_des;
 
@@ -39,6 +75,9 @@ if (pg_num_rows($res) == 0){
   die();
 }
 
+if ($user_src == $user_des){
+  die(setAlert("Keep Exploring World"));
+}
 // Whether $user_src ~ $user_des pair existed in database already
 $sql = "select * from friend where username='{$user_src}' and username2='{$user_des}'";
 $res = pg_query($sql);
