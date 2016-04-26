@@ -171,13 +171,13 @@
             <td>{$personi}</td>
             <td>{$datei}</td>
             <td>
-              <a href='display_pic.php?uname={$personi}&did={$midi}' class='btn btn-info btn-xs' role='button'>&nbsp;View&nbsp;</a>
+              <a href='display_pic.php?uname={$uname}&mid={$midi}&type=feeds' class='btn btn-info btn-xs' role='button'>&nbsp;View&nbsp;</a>
               ";
               if ($admin == NULL || $admin != $personi) {
 
               } else {
                 echo 
-              "<a href='delete_d.php?uname={$personi}&did={$midi}' class='btn btn-danger btn-xs' role='button'>Delete</a>";
+              "<a href='delete_p.php?uname={$uname}&mid={$midi}&type=feeds' class='btn btn-danger btn-xs' role='button'>Delete</a>";
               }
             echo "</td>
           </tr>
