@@ -1,7 +1,7 @@
 <html>
 
 <head>
-<title>Feeds:</title>
+<title>Feeds</title>
 <script type="text/javascript" src="js/check.js"></script>
 <link href="bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="css/register.css" rel="stylesheet">
@@ -38,7 +38,7 @@
   ?>
 
 <body>
-
+<center><h3>Your Feeds</h3></center>
 <!-- List all feeds of friends + FoF of user -->
 <div class="container-fluid">
 <div class="row clearfix">
@@ -190,19 +190,15 @@
 </table>
 
 </div>
-<<<<<<< HEAD
-</div>
   <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>window.jQuery || document.write('<js/jquery.min.js"><\/script>')</script>
     <script src="js/bootstrap.min.js"></script>
-=======
 
 
 </div> <!-- col-lg-12 ends here -->
 </div> <!-- row ends here -->
 </div> <!-- container ends here -->
->>>>>>> 379398654b0c8e3253e4cd3ab201d02e4f26bda1
 </body>
 
 </html>
