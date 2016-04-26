@@ -77,7 +77,9 @@ create table if not exists greeting (
 	username2		varchar(20) not null, -- receiver's username
 	gre_time	timestamp with time zone not null,
 	gre_text	varchar(1000),
-	primary key (username, username2, gre_time)
+	status		varchar(10) not null,
+	primary key (username, username2, gre_time),
+	check (status in ('unread', 'read'))
 	);
 
 alter table greeting add constraint friend_gre_FK foreign key (username) references users (username);

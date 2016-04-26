@@ -44,13 +44,18 @@
 
 
 
+
       <form class="navbar-form navbar-left" role="search">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
-        </div>
-        <button type="submit" class="btn btn-default">Go!</button>
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Search for...">
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button">Go!</button>
+          </span>
+        </div><!-- /input-group -->
       </form>
       <ul class="nav navbar-nav navbar-right">
+        <li><a href="greeting.php?uname=<?php echo $admin; ?>">Greeting <span class="badge">2</span></a>
+        </li>
         <li><a href="newfeeds.php?uname=<?php echo $admin; ?>"><strong><span style="color:#FF717E">Feeds!</span></strong></a></li>
         <li><a href="logout.php?uname=<?php echo $admin; ?>">Log Out</a></li>
         <li class="dropdown">
