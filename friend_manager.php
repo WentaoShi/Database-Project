@@ -3,17 +3,24 @@
     include("connect.php");
     include("functions/alert.php");
 
-    $uname= $_POST['uname'];
+    $uname= $_GET['uname'];
     $sql1="select name from users where username = '{$uname}';";
     $result1 = pg_query($conn, $sql1);
     $arr1 = pg_fetch_array($result1, NULL, PGSQL_BOTH);
     $name = $arr1['name'];
-    $admin = $_COOKIE['admin'];
+        if (isset($_COOKIE['admin'])) {
+        $admin = $_COOKIE['admin'];
+    } else {
+        $admin = "";
+    }
+
     if ($admin == NULL || $admin != $uname) {
       setAlert("Please log in.");
       echo "<div class='text-center'><a href='login.php?' class='btn btn-success btn-lg' role='button'>Go Log in!</a></div>";
       die;
     }
+
+    include("functions/navi_bar.php");
 
   ?>
   <head>
@@ -88,5 +95,10 @@
   </tbody>
 </table>
 </div>
+
+  <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<js/jquery.min.js"><\/script>')</script>
+    <script src="js/bootstrap.min.js"></script>
 </body>
 </html>

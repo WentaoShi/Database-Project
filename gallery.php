@@ -2,19 +2,18 @@
 <html lang="en">
 
 <head>
+
+    <title>Your Gallery</title>
+    <script type="text/javascript" src="js/dropdown.js"></script>
+    <link href="bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/mycss.css" rel="stylesheet" />
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="A home page of the website.">
+    <meta name="author" content="Wentao Shi">
 
-    <title>Your Gallery</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="css/thumbnail-gallery.css" rel="stylesheet">
 <?php
 include("connect.php");
 include("functions/alert.php");
@@ -44,6 +43,7 @@ foreach (glob("tmp/gall_{$uname}_*.jpg") as $filename) {
 </head>
 
 <body>
+<?php include("functions/navi_bar.php"); ?>
     <!-- Page Content -->
     <div class="container">
 
@@ -80,7 +80,15 @@ foreach (glob("tmp/gall_{$uname}_*.jpg") as $filename) {
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
+  <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<js/jquery.min.js"><\/script>')</script>
+    <script src="js/bootstrap.min.js"></script>
 
+      <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<js/jquery.min.js"><\/script>')</script>
+    <script src="js/bootstrap.min.js"></script>
 </body>
 
 </html>

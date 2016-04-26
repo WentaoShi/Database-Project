@@ -15,6 +15,7 @@
       echo "<div class='text-center'><a href='login.php?' class='btn btn-success btn-lg' role='button'>Go Log in!</a></div>";
       die;
     }
+    include("functions/navi_bar.php");
 
     $sql="select * from diary where did = '{$did}';";
     $result = pg_query($conn, $sql);
@@ -148,5 +149,10 @@
 </div>
 
 </div>
+
+  <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<js/jquery.min.js"><\/script>')</script>
+    <script src="js/bootstrap.min.js"></script>
 </body>
     </html>

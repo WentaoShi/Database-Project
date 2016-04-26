@@ -24,6 +24,7 @@ if (isset($_COOKIE['admin'])) {
       echo "<div class='text-center'><a href='login.php?' class='btn btn-success btn-lg' role='button'>Go Log in!</a></div>";
       die;
     }
+    include("functions/navi_bar.php");
  ?>
 
 <form action="photo_up_process.php" method="post" enctype="multipart/form-data" class="form-register">
@@ -90,6 +91,9 @@ if (isset($_COOKIE['admin'])) {
 </div>
 
 </form>
-
+  <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<js/jquery.min.js"><\/script>')</script>
+    <script src="js/bootstrap.min.js"></script>
  </body>
  </html>

@@ -1,6 +1,7 @@
 <html>
   <head>
     <title>Homepage</title>
+    <script type="text/javascript" src="js/dropdown.js"></script>
     <link href="bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/mycss.css" rel="stylesheet" />
 
@@ -18,12 +19,14 @@
   <?php
     include("connect.php");
     include("functions/alert.php");
+    
     if (isset($_COOKIE['admin'])) {
         $admin = $_COOKIE['admin'];
     } else {
         $admin = "";
     }
 
+    include("functions/navi_bar.php");
     $dir = "images";
     $uname= $_GET['uname'];
 
@@ -41,10 +44,11 @@
     <div class="container">
 
     <h1>
+    <!--
     <a href="logout.php?uname=<?php echo $uname; ?>" class="btn btn-warning btn-lg pull-right" role="button">Log out</a>
-    <a href="newfeeds.php?uname=<?php echo $uname;?>" class="btn btn-primary btn-lg pull-left" role="button">Feeds</a>
+    <a href="newfeeds.php?uname=<?php echo $uname;?>" class="btn btn-primary btn-lg pull-left" role="button">Feeds</a>-->
     &nbsp;
-    <span style="color:#FF0040">Welcome, <?php echo $row['name'] ?>! This is your home page!</span>
+    <span style="color:#FF717E">Welcome, <?php echo $row['name'] ?>! This is your home page!</span>
     </h1>
   
     
@@ -101,51 +105,52 @@
 </table>
 
 </form>
-<div class="btn-group pull-right" role="group" aria-label="...">
+<hr class="hr2"></hr>
+
+<!-Friend start here->
+
 
 <h2>
-        <span class="cap">Your Friend Request:</span>
-      <!--<em>Your Friend Request :</em>-->
-    </h2><?php
+        <span class="cap">Your Friends:</span>
+    </h2>
+
+
+
+    <?php
 
     $sql3="SELECT * from friend where username2='{$uname}' and status='pending'"; 
     $rs3=pg_query($conn,$sql3); 
     $num3=pg_num_rows($rs3);
+
     if($num3){
                 ?>
-    <table cellpadding="3" cellspacing="5" border="0" width="200px">
-      <tr>
-        <td>You have <?php echo $num3 ?> friend requests !</td>
-        <td>
-          <input type="button" class="btn btn-sm btn-warning" value="Go to process !"
-          onclick="window.location.href='friend_process.php?uname=<?php echo $uname ?>';" />
-        </td>
-      </tr>
-    </table>
+<form  class="form-register">
+
+        <?php setYellowAlert("You have <strong>{$num3}</strong> friend requests !"); ?>
+
+          <input type="button" class="btn btn-sm btn-warning btn-block" value="Go to process!"
+          onclick="window.location.href='friend_process.php?uname=<?php echo $uname; ?>'" />
+    </form>
     <?php
     }
-    else{
-            ?> 
-    <em>You have no friend request now !</em> <?php
+    else{ //setYellowAlert("<em>You have no friend request now!</em>");
+    
     }
     ?>
 
-    <div>
-    <form action='friend_request.php' method="post" class="form-register">
+    <form action='friend_request.php' method="get" class="form-register">
     <input type="hidden" name="uname" value= <?php echo $uname; ?> >
-    <input type="submit" value="Add Friends" name="submit" class="btn btn-primary btn-danger form-next">
+    <input type="submit" value="Add Friends" name="submit" class="btn btn-primary btn-danger btn-block">
     </form>
-    <form action='friend_manager.php' method="post" class="form-register">
+    <form action='friend_manager.php' method="get" class="form-register">
     <input type="hidden" name="uname" value= <?php echo $uname; ?> >
-    <input type="submit" value="Friends Manager" name="submit" class="btn btn-primary form-next">
+    <input type="submit" value="Friends Manager" name="submit" class="btn btn-primary btn-block">
     </form>
-    </div>
 
 
-</div>
         
         <br>
-        <br>
+        <hr class="hr2"></hr>
     <h1>
       <span class="cap">Personal Information:</span>
     </h1>
@@ -190,7 +195,7 @@
     <hr>
     <div class="btn-group pull-right" role="group" aria-label="...">
 <table><tr><td>
-      <form action='write_diary.php' method="post" class="form-register">
+      <form action='write_diary.php' method="get" class="form-register">
         <input type="hidden" name="uname" value= <?php echo $uname; ?> >
         <input type="submit" value="Write a diary!" name="submit" class="btn btn-lg btn-danger form-next">
       </form>
@@ -340,5 +345,11 @@ include("connect.php");
         <div id="footer">
             &copy; built by Wentao Shi, Yun Yan and Liang Shan
         </div>
+
+  <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<js/jquery.min.js"><\/script>')</script>
+    <script src="js/bootstrap.min.js"></script>
+
   </body>
 </html>

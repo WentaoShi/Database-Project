@@ -45,21 +45,21 @@ $res = pg_query($sql);
 $tuple = pg_fetch_array($res);
 // src => des exists already
 if ($tuple['status'] == 'pending'){
-  die(setAlert("You have already sent request. Please Wait for respond from {$user_des}"));
+  die(setAlertWithBackButton("You have already sent request. Please Wait for respond from {$user_des}", "Go Back"));
 }
 if ($tuple['status'] == 'accepted'){
-  die(setSuccessAlert("A-hah, {$user_des} is your friend already."));
+  die(setSuccessAlertWithBackButton("A-hah, {$user_des} is your friend already.", "Go Back"));
 }
 if ($tuple['status'] == 'declined'){
-  die(setAlert("Oops, you once were decliend."));
+  die(setAlertWithBackButton("Oops, you once were decliend.", "Go Back"));
 }
 
 $sql = "INSERT INTO friend VALUES ('{$user_src}', '{$user_des}', 'pending', current_timestamp)";
 $result = pg_query($conn, $sql);
 if(!$result){
-  die(setAlert(pg_last_error()));
+  die(setAlertWithBackButton(pg_last_error(), "Go Back"));
 
 } else{
-  echo setSuccessAlert("Great! You request has been sent!");
+  echo setSuccessAlertWithBackButton("Great! You request has been sent!", "Go Back");
 }
 ?>

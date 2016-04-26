@@ -21,4 +21,8 @@ function setSuccessAlertWithBackButton($text, $button, $uname) {
 
 }
 
+function setYellowAlert($text) {
+	echo "<div class='alert alert-warning' role='alert'><center><strong>{$text}</strong></center></div>";
+}
+
   ?>
