@@ -17,6 +17,7 @@
     include("functions/alert.php");
 
     $uname= $_POST['uname'];
+    $return= $_POST['return'];
     if (isset($_COOKIE['admin'])) {
         $admin = $_COOKIE['admin'];
     } else {
@@ -45,7 +46,7 @@
 
       echo setSuccessAlert("Great! You profile has been sent!");
 
-      header("location: home.php?uname={$admin}");
+      header("location: {$return}.php?uname={$admin}");
     }
 ?>
 

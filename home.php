@@ -61,6 +61,7 @@
     <?php
         include("functions/storePicToTmp.php");
       ?>
+<!-Display Profile Photo->
       <?php
         include("connect.php");
         $sql="SELECT user_photo FROM users WHERE username='{$uname}';";  
@@ -90,14 +91,15 @@
 <!-Write a Profile->
 <form action="up_profile.php" method="post" class="form-register">
 <input type="hidden" name="uname" value= <?php echo $admin; ?> >
+<input type="hidden" name="return" value="home" >
 <span style="color:#FF717E"><h5>Say somethin' (Your profile):</h5></span>
-<textarea name="content" rows="2" cols="39"></textarea>
+<textarea name="content" rows="2" cols="33"></textarea>
 <input type="submit" value="Post saying" name="submit" class="btn btn-sm btn-warning btn-block">
-<a href="profile.php?host=<?php echo $uname; ?>" class="btn btn-info btn-sm btn-block" role="button">View all your saying</a>
+<a href="profile.php?uname=<?php echo $uname; ?>" class="btn btn-info btn-sm btn-block" role="button">View all your saying</a>
 </form>
 
 
-
+<!-Upload Profile Photo->
 <table>
 <form action="photo_up_process.php" method="post" enctype="multipart/form-data" class="form-register">
 

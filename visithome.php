@@ -77,7 +77,7 @@
     
     <div class="col-md-3">
 
-
+<!-Display Profile Photo->
     <?php
         include("functions/storePicToTmp.php");
       ?>
@@ -93,6 +93,19 @@
         }
 
        ?>
+<br>
+<!-Profile Starts here->
+<?php
+        $sql_p="SELECT * FROM profile WHERE pid in (select pid from post_p where username = '{$uname}') order by time_stamp desc;"; 
+
+        $pro_result= pg_query($conn, $sql_p);
+        $pro_resultarray = pg_fetch_array($pro_result, NULL, PGSQL_BOTH);
+        if($pro_resultarray['pid'] != NULL) {
+          echo "<h5>{$pro_resultarray['content']}</h5><a href='profile.php?uname={$uname}' class='btn btn-info btn-md btn-block' role='button'>View all {$host_gender_call} saying</a>";
+        } else {
+          echo setAlert("No profiles here.");
+        }
+?>
 <br>
 <a href="greeting.php?host=<?php echo $host; ?>" class="btn btn-warning btn-block" role="button">Send Greeting!</a>
 <hr class="hr2"></hr>
