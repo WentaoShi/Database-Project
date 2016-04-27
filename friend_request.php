@@ -9,12 +9,14 @@
   <body>
     <?php
     include("functions/alert.php");
-      $uname= $_GET['uname'];
       if (isset($_COOKIE['admin'])) {
           $admin = $_COOKIE['admin'];
       } else {
           $admin = "";
       }
+      $uname=$admin; 
+      //$uname= $_GET['uname'];
+      // because $uname is request sender, it will always be the person who holds the $admin in the cookie.
 
       if ($admin == NULL || $admin != $uname) {
         setAlert("Please log in.");
