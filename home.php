@@ -42,14 +42,14 @@
     ?>
     <div class="container">
 
-    <h1>
+<!--    <h1>
     <!--
     <a href="logout.php?uname=<?php echo $uname; ?>" class="btn btn-warning btn-lg pull-right" role="button">Log out</a>
-    <a href="newfeeds.php?uname=<?php echo $uname;?>" class="btn btn-primary btn-lg pull-left" role="button">Feeds</a>-->
-    &nbsp;
-    <span style="color:#FF717E">Welcome, <?php echo $row['name'] ?>! This is your home page!</span>
+<!--       <a href="newfeeds.php?uname=<?php echo $uname;?>" class="btn btn-primary btn-lg pull-left" role="button">Feeds</a>-->
+ <!--      &nbsp;
+   <span style="color:#FF717E">Welcome, <?php echo $row['name'] ?>! This is your home page!</span>
     </h1>
-  
+-->
     
       
 
@@ -243,7 +243,7 @@
 
 
 
-    <h1><span class="cap">Your Diaries:</span></h1>
+    <h1><span class="cap"><font face="verdana,arial,sans-serif" color="green">Diaries:</font></span></h1>
     <hr style="height:1px;border:none;color:#FFFFFF;background-color:#FFFFFF;" />
 
 
@@ -301,7 +301,8 @@
 </table>
     </div>
 
-<h1><span class="cap">Your Photos:</span></h1>
+<h1><span class="cap"><font face="verdana,arial,sans-serif" color="green">Photos:</font></span></h1>
+
 <hr style="height:1px;border:none;color:#FFFFFF;background-color:#FFFFFF;" />
 
 
@@ -377,6 +378,11 @@ include("connect.php");
          <hr class="hr2"></hr>
         <div id="footer">
             &copy; built by Wentao Shi, Yun Yan and Liang Shan
+            
+             <footer class="footer">
+        <p>&copy; 2016 Company, Inc.</p>
+      </footer>
+
         </div>
 
   <!-- Placed at the end of the document so the pages load faster -->

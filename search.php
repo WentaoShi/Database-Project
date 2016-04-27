@@ -44,14 +44,15 @@ $search= $_GET['search'];
     $reachedPersonMedia = pg_fetch_all($query_reachedPersonMedia);
   
 echo "<div class='text-center'>";
-echo "<font size=5>","<em>","Users result about '".$search."':</em>","</br>","</font>";
+echo "<p><h2><span style='color:#FF717E'>Users result about '".$search."':</h2></span></td>";
+
 $sql="SELECT DISTINCT * from users where users.name like '%{$search}%' or users.username like '%{$search}%'"; 
 $rs=pg_query($conn,$sql);
 $num=pg_num_rows($rs);
 if($num){
 while($row=pg_fetch_array($rs)){	
 		?>
-    <table >
+    <table align="right" >
     <tr><em> User Name :</em> <?php echo $row['username']   ?></tr>
     <tr><em> Real Name :</em> <?php echo $row['name']   ?></tr>
     
@@ -62,8 +63,8 @@ while($row=pg_fetch_array($rs)){
 else{
 	echo "No User about '". $search ."'!";
 }
+echo "<p><h2><span style='color:#62FF33'>Photos result about '".$search."':</h2></span></td>";
 
-echo "<font size=5>","<em>","<br>","Photos result about '".$search."':</em>","</br>","</font>";
 $sql1="SELECT * from media, post_m where media.mid=post_m.mid and media.mid in (select mid from FetchFeedsMedia4Me('{$admin}'))
        and (media.title like '%{$search}%' or media.des_text like '%{$search}%')limit 5"; 
 $rs1=pg_query($conn, $sql1);
@@ -71,7 +72,7 @@ if($rs1) {
 $num1=pg_num_rows($rs1);
 if($num1){
 	?>
-	<table cellpadding="2" cellspacing="5" border="0" width="700px">
+	<table align="center" cellpadding="2" cellspacing="5" border="2" width="700px">
 	<tr><td><em> Pictures : </em></td>
   <td><em> title: </em></td>
   <td><em> describe:</em></td>
@@ -99,15 +100,15 @@ else{
 	echo "No photo about '" . $search ."'!";
 }
 }
+echo "<p><h2><span style='color:#3342FF'>Diaries result about '".$search."':</h2></span></td>";
 
-echo "<font size=5>","<em>","<br>","Diaries result about '".$search."':</em>","</br>","</font>";
 $sql2="SELECT * from diary,post_d where diary.did= post_d.did and diary.did in (select did from FetchFeedsDiary4Me('{$admin}'))
        and (diary.title like '%{$search}%' or diary.body like '%{$search}%') limit 5"; 
 $rs2=pg_query($conn,$sql2); 
 $num2=pg_num_rows($rs2);
 if($num2){
 	?>
-	<table cellpadding="3" cellspacing="5" border="0" width="500px">
+	<table align="center" cellpadding="3" cellspacing="5" border="2" width="500px">
     <tr><td><em>title: </em></td>
       <td><em>content: </em></td>
     <td><em>time: </em></td>
