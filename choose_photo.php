@@ -63,7 +63,7 @@ if (isset($_COOKIE['admin'])) {
                 </div>
                 <div class="radio">
                   <label>
-                    <input type="radio" name="visib" id="fof" value="option2">
+                    <input type="radio" name="visib" id="fof" value="fof">
                     My friends and the friends of my friends
                   </label>
                 </div>
