@@ -44,6 +44,12 @@ $search= $_GET['search'];
     $reachedPersonMedia = pg_fetch_all($query_reachedPersonMedia);
   
 echo "<div class='text-center'>";
+if(empty($search)){
+
+echo setAlert("Your should enter something !");
+die();
+
+}
 echo "<p><h2><span style='color:#FF717E'>Users result about '".$search."':</h2></span></td>";
 
 $sql="SELECT DISTINCT * from users where users.name like '%{$search}%' or users.username like '%{$search}%'"; 
