@@ -49,9 +49,9 @@
     </h1>
     <hr class="hr2"></hr>
     
-    <div class="col-md-3 column">
+  <div class="col-md-3 column">
 
-<section>
+  <section>
     <?php
         include("functions/storePicToTmp.php");
       ?>
@@ -68,115 +68,115 @@
         }
 
        ?>
-</section>
+  </section>
 
-<section>
-<!-Profile Starts here->
-<?php
-        $sql_p="SELECT * FROM profile WHERE pid in (select pid from post_p where username = '{$uname}') order by time_stamp desc;"; 
+  <section>
+  <!-Profile Starts here->
+  <?php
+          $sql_p="SELECT * FROM profile WHERE pid in (select pid from post_p where username = '{$uname}') order by time_stamp desc;"; 
 
-        $pro_result= pg_query($conn, $sql_p);
-        $pro_resultarray = pg_fetch_array($pro_result, NULL, PGSQL_BOTH);
-        if($pro_resultarray['pid'] != NULL) {
-          echo "<h5>{$pro_resultarray['content']}</h5>";
-        } else {
-          echo setAlert("No profiles here.");
-        }
+          $pro_result= pg_query($conn, $sql_p);
+          $pro_resultarray = pg_fetch_array($pro_result, NULL, PGSQL_BOTH);
+          if($pro_resultarray['pid'] != NULL) {
+            echo "<h5>{$pro_resultarray['content']}</h5>";
+          } else {
+            echo setAlert("No profiles here.");
+          }
 
-?>
-</section>
-<section>
-<!-Write a Profile->
-<form action="up_profile.php" method="post" class="form-register">
-<input type="hidden" name="uname" value= <?php echo $admin; ?> >
-<input type="hidden" name="return" value="home" >
-<span style="color:#FF717E"><h5>Say somethin' (Your profile):</h5></span>
-<textarea class="mytextarea" name="content" rows="2"  placeholder="Say Somethin' about yourself"></textarea>
-<input type="submit" value="Post saying" name="submit" class="btn btn-sm btn-warning btn-block">
-<a href="profile.php?uname=<?php echo $uname; ?>" class="btn btn-info btn-sm btn-block" role="button">View all your saying</a>
-</form>
-</section>
+  ?>
+  </section>
+  <section>
+  <!-Write a Profile->
+  <form action="up_profile.php" method="post" class="form-register">
+  <input type="hidden" name="uname" value= <?php echo $admin; ?> >
+  <input type="hidden" name="return" value="home" >
+  <span style="color:#FF717E"><h5>Say somethin' (Your profile):</h5></span>
+  <textarea class="mytextarea" name="content" rows="2"  placeholder="Say Somethin' about yourself"></textarea>
+  <input type="submit" value="Post saying" name="submit" class="btn btn-sm btn-warning btn-block">
+  <a href="profile.php?uname=<?php echo $uname; ?>" class="btn btn-info btn-sm btn-block" role="button">View all your saying</a>
+  </form>
+  </section>
 
-<section>
-<!-Upload Profile Photo->
-<table>
-<form action="photo_up_process.php" method="post" enctype="multipart/form-data" class="form-register">
+  <section>
+  <!-Upload Profile Photo->
+  <table>
+  <form action="photo_up_process.php" method="post" enctype="multipart/form-data" class="form-register">
 
-  <tr><td>
-      <?php 
-        if($resultarray['user_photo'] != NULL) {
-          echo "<p><h5><span style='color:#FF717E'>Change your profile photo!</h5></span></td>";
-        } else {
-          echo "<p><h5><span style='color:#FF717E'>Upload your profile photo!</h5></span></td>";
-        }
-
-       ?>
-      
-    </tr>
     <tr><td>
-      <input type="file" name="fileToUpload" id="fileToUpload" class="form-control"></td><tr><td>
-      <input type="hidden" name="uname" value= <?php echo $uname; ?> >
-      <input type="hidden" name="type" value="profile">
-      <input type="submit" value="Upload Image" name="submit" class="btn btn-sm btn-success btn-block form-next"></td></tr>
-    </tr><p>
+        <?php 
+          if($resultarray['user_photo'] != NULL) {
+            echo "<p><h5><span style='color:#FF717E'>Change your profile photo!</h5></span></td>";
+          } else {
+            echo "<p><h5><span style='color:#FF717E'>Upload your profile photo!</h5></span></td>";
+          }
+
+         ?>
+        
+      </tr>
+      <tr><td>
+        <input type="file" name="fileToUpload" id="fileToUpload" class="form-control"></td><tr><td>
+        <input type="hidden" name="uname" value= <?php echo $uname; ?> >
+        <input type="hidden" name="type" value="profile">
+        <input type="submit" value="Upload Image" name="submit" class="btn btn-sm btn-success btn-block form-next"></td></tr>
+      </tr><p>
 
 
-    <tr>
-        <td colspan="2">
-            <small><em> * We accept <span style="color:blue">GIF</span>, <span style="color:blue">JPG/JPEG</span> and <span style="color:blue">PNG</span> as image formats.<br>* Please note this photo can be seen by anyone.</em></small>
-        </td>
-    </tr>
-</table>
+      <tr>
+          <td colspan="2">
+              <small><em> * We accept <span style="color:blue">GIF</span>, <span style="color:blue">JPG/JPEG</span> and <span style="color:blue">PNG</span> as image formats.<br>* Please note this photo can be seen by anyone.</em></small>
+          </td>
+      </tr>
+  </table>
 
-</form>
-<hr class="hr2"></hr>
-</section>
+  </form>
+  <hr class="hr2"></hr>
+  </section>
 
 
 <!-Friend start here->
 
-
-<h2>
-  <span class="cap">Your Friends:</span>
-</h2>
-
-
-
-    <?php
-
-    $sql3="SELECT * from friend where username2='{$uname}' and status='pending'"; 
-    $rs3=pg_query($conn,$sql3); 
-    $num3=pg_num_rows($rs3);
-
-    if($num3){
-                ?>
-<form  class="form-register">
-
-        <?php setYellowAlert("You have <strong>{$num3}</strong> friend requests !"); ?>
-
-          <input type="button" class="btn btn-sm btn-warning btn-block" value="Go to process!"
-          onclick="window.location.href='friend_process.php?uname=<?php echo $uname; ?>'" />
-    </form>
-    <?php
-    }
-    else{ //setYellowAlert("<em>You have no friend request now!</em>");
-    
-    }
-    ?>
-
-    <form action='friend_request.php' method="get" class="form-register">
-    <input type="hidden" name="uname" value= <?php echo $uname; ?> >
-    <input type="submit" value="Add Friends" name="submit" class="btn btn-primary btn-danger btn-block">
-    </form>
-    <form action='friend_manager.php' method="get" class="form-register">
-    <input type="hidden" name="uname" value= <?php echo $uname; ?> >
-    <input type="submit" value="Friends Manager" name="submit" class="btn btn-primary btn-block">
-    </form>
+  <section>
+  <h2>
+    <span class="cap">Your Friends:</span>
+  </h2>
 
 
+
+  <?php
+
+  $sql3="SELECT * from friend where username2='{$uname}' and status='pending'"; 
+  $rs3=pg_query($conn,$sql3); 
+  $num3=pg_num_rows($rs3);
+
+  if($num3){
+            ?>
+  <form  class="form-register">
+
+    <?php setYellowAlert("You have <strong>{$num3}</strong> friend requests !"); ?>
+
+      <input type="button" class="btn btn-sm btn-warning btn-block" value="Go to process!"
+      onclick="window.location.href='friend_process.php?uname=<?php echo $uname; ?>'" />
+  </form>
+  <?php
+  }
+  else{
+  }
+  ?>
+
+  <form action='friend_request.php' method="get" class="form-register">
+  <input type="hidden" name="uname" value= <?php echo $uname; ?> >
+  <input type="submit" value="Add Friends" name="submit" class="btn btn-primary btn-danger btn-block">
+  </form>
+  <form action='friend_manager.php' method="get" class="form-register">
+  <input type="hidden" name="uname" value= <?php echo $uname; ?> >
+  <input type="submit" value="Friends Manager" name="submit" class="btn btn-primary btn-block">
+  </form>
+  </section>
         
-        <br>
-        <hr class="hr2"></hr>
+  <br>
+  <hr class="hr2"></hr>
+
+  <section>
     <h1>
       <span class="cap">Personal Information:</span>
     </h1>
@@ -225,8 +225,11 @@
       </table>
     </form>
     </div>
+  </section>
 
-    <hr>
+  <hr>
+  <div class='col-md-9'>
+
     <div class="btn-group pull-right" role="group" aria-label="...">
 <table><tr><td>
       <form action='write_diary.php' method="get" class="form-register">
@@ -362,7 +365,7 @@ include("connect.php");
     }
   }
 ?>
-
+</div>
 
 </div>
 </div>
