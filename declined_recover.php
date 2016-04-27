@@ -11,7 +11,7 @@
     include("connect.php");
     include("functions/alert.php");
 
-    $uname= $_GET['username'];
+    $uname= $_GET['username2'];
     if (isset($_COOKIE['admin'])) {
         $admin = $_COOKIE['admin'];
     } else {
@@ -22,18 +22,17 @@
       echo "<div class='text-center'><a href='login.php?' class='btn btn-success btn-lg' role='button'>Go Log in!</a></div>";
       die;
     }
-    $fname = $_GET['username2'];
+    $fname = $_GET['username'];
 
     $sql = "delete from friend
-            where ((username='{$uname}' and username2='{$fname}')
-                or (username='{$fname}' and username2='{$uname}'))
-                and status = 'accepted';";
+            where username='{$fname}' and username2='{$uname}'
+                  and status = 'declined';";
     $res = pg_query($conn, $sql);
 
     if ($res){
-      setSuccessAlert("User '{$fname}' has been deleted from your friend lists.");
+      setSuccessAlert("User '{$fname}' is out of your declined list.");
     } else {
-      setAlert("None friends exists");
+      setAlert("You had never declined '{$fname}'.");
     }
 
 
