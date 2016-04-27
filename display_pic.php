@@ -186,7 +186,7 @@ if ($author == $admin) {
 
 
 <div class="text-center">
-<form action='delete_d.php' method="get" class="form-register">
+<form action='delete_p.php' method="get" class="form-register">
   <a href="home.php?uname=<?php echo $uname; ?>" class="btn btn-success btn-lg" role="button">Go Back home!</a>
   
   <?php 
