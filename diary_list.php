@@ -92,7 +92,7 @@
 </table>
 
 <div class="text-center">
-  <a href="home.php?uname=<?php echo $uname; ?>" class="btn btn-success btn-lg" role="button">Go Back home!</a>
+  <a href="home.php?uname=<?php echo $admin; ?>" class="btn btn-success btn-lg" role="button">Go Back home!</a>
 </div>
 
 </div>
