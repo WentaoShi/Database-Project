@@ -32,14 +32,14 @@ $search= $_GET['search'];
     pg_query($conn, $sql7);
     pg_query($conn, $sql8);
     pg_query($conn, $sql9);
-    $sql_feedsDiary = file_get_contents('./functions/fetch_feeds.sql', true);
+    $sql_feedsDiary = file_get_contents('./functions/fetch_search.sql', true);
     pg_query($conn, $sql_feedsDiary); // procedure: FetchFeedsXXXX4Me
 
-    $sql_reachedPerson_diary = "select * from FetchFeedsDiary4Me('{$admin}')";
+    $sql_reachedPerson_diary = "select * from FetchSearchDiary4Me('{$admin}')";
     $query_reachedPersonDiaries = pg_query($conn, $sql_reachedPerson_diary);
     $reachedPersonDiaries = pg_fetch_all($query_reachedPersonDiaries);
 
-    $sql_reachedPerson_media = "select * from FetchFeedsMedia4Me('{$admin}')";
+    $sql_reachedPerson_media = "select * from FetchSearchMedia4Me('{$admin}')";
     $query_reachedPersonMedia = pg_query($conn, $sql_reachedPerson_media);
     $reachedPersonMedia = pg_fetch_all($query_reachedPersonMedia);
   
@@ -65,7 +65,7 @@ else{
 }
 echo "<p><h2><span style='color:#62FF33'>Photos result about '".$search."':</h2></span></td>";
 
-$sql1="SELECT * from media, post_m where media.mid=post_m.mid and media.mid in (select mid from FetchFeedsMedia4Me('{$admin}'))
+$sql1="SELECT * from media, post_m where media.mid=post_m.mid and media.mid in (select mid from FetchSearchMedia4Me('{$admin}'))
        and (media.title like '%{$search}%' or media.des_text like '%{$search}%')limit 5"; 
 $rs1=pg_query($conn, $sql1);
 if($rs1) {
@@ -102,7 +102,7 @@ else{
 }
 echo "<p><h2><span style='color:#3342FF'>Diaries result about '".$search."':</h2></span></td>";
 
-$sql2="SELECT * from diary,post_d where diary.did= post_d.did and diary.did in (select did from FetchFeedsDiary4Me('{$admin}'))
+$sql2="SELECT * from diary,post_d where diary.did= post_d.did and diary.did in (select did from FetchSearchDiary4Me('{$admin}'))
        and (diary.title like '%{$search}%' or diary.body like '%{$search}%') limit 5"; 
 $rs2=pg_query($conn,$sql2); 
 $num2=pg_num_rows($rs2);
