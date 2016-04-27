@@ -12,7 +12,8 @@ include('functions/alert.php');
 $fID=$_GET['fID'];
 $hID=$_GET['hID'];
 // $cir=$_POST['cir'];
-$sql="UPDATE friend SET status='accepted' where username2='{$hID}' and username='{$fID}'";
+$sql="UPDATE friend SET status='accepted', res_time = current_timestamp
+      where username2='{$hID}' and username='{$fID}'";
 
 if(pg_query($conn,$sql))
 { 

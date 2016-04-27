@@ -36,7 +36,12 @@
     <meta charset="utf-8">
   </head>
 <body>
-<div class="form-register">
+
+<div class="container-fluid">
+<div class="row clearfix">
+<div class="col-md-12 column">
+
+
   <!-- Does user have any friends? -->
   <?php
   // pgsql procedure: FetchFriendTable
@@ -60,6 +65,7 @@
 
 
   <!--  Friends List & See/Delete Friends -->
+  <div class="col-md-6 column">
   <?php
     $friends = pg_fetch_all($result);
   ?>
@@ -104,9 +110,14 @@
         </tr>
       ";
     }
- ?>
+   ?>
   </tbody>
-</table>
+  </table>
+  </div>
+
+  
+</div>
+</div>
 </div>
 
 

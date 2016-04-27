@@ -68,13 +68,12 @@ if ($num3) {
 
 
 
-
-      <form class="navbar-form navbar-left" role="search">
+      <form action="search.php" class="navbar-form navbar-left" method="get" role="search">
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Search for...">
+          <input type="text" name="search" class="form-control" placeholder="Search for...">
+       
           <span class="input-group-btn">
-            <button class="btn btn-default" type="button">Go!</button>
-          </span>
+         <input value="GO" type="submit" class="btn btn-success">
         </div><!-- /input-group -->
       </form>
       <ul class="nav navbar-nav navbar-right">
