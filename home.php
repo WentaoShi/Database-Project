@@ -45,14 +45,14 @@
 <div class="col-md-12 column">
 
 
-<!--    <h1>
+<!--    
     <!--
     <a href="logout.php?uname=<?php echo $uname; ?>" class="btn btn-warning btn-lg pull-right" role="button">Log out</a>
 <!--       <a href="newfeeds.php?uname=<?php echo $uname;?>" class="btn btn-primary btn-lg pull-left" role="button">Feeds</a>-->
- <!--      &nbsp;
+&nbsp;
+<h1>
    <span style="color:#FF717E">Welcome, <?php echo $row['name'] ?>! This is your home page!</span>
     </h1>
--->
     
       
 
