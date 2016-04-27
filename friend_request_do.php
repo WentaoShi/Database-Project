@@ -59,7 +59,7 @@ $mail->Host       = "smtp.gmail.com";
 $mail->Port       = 465;                    
 $mail->Username   = "zty213@gmail.com";  
 $mail->Password   = "shanliang";        
-$mail->SetFrom('leronshan@163.com', 'Facebook');    
+$mail->SetFrom('leronshan@163.com', 'Techies');    
 $mail->AddReplyTo("leronshan@gmail.com","邮件回复人名称"); 
                                             
 $mail->Subject    = 'Friend Request ';                     

@@ -20,3 +20,9 @@
 .black{
     color: #000;
 }
+
+.mytextarea{
+    min-width: 100%;
+    max-width: 100%;
+    margin-bottom: 10px;
+}

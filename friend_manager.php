@@ -60,16 +60,13 @@
     </form>
   </div>
   <?php
-  die();
+  // die();
   }?>
 
 
   <!--  Friends List & See/Delete Friends -->
   <div class="col-md-6 column">
-  <?php
-    $friends = pg_fetch_all($result);
-  ?>
-  <h4>Hi, <?php echo $uname?>, your friends are listed: </h4>
+  <h4>Hi, <?php echo $uname?>, your have <?php echo pg_num_rows($result) ?> friends: </h4>
   <table class="table table-hover">
   <thead>
     <tr>
@@ -83,7 +80,7 @@
   
   <?php 
     date_default_timezone_set('America/New_York');
-    for ($i = 1; $i <= count($friends); $i++) {
+    for ($i = 1; $i <= pg_num_rows($result); $i++) {
       $arri = pg_fetch_array($result, $i - 1, PGSQL_BOTH);
       $friendi = $arri['direct_friend'];
       $datei = substr($arri['res_time'], 0, 16);
@@ -103,6 +100,56 @@
 
             } else {
               echo "<a href='friend_delete.php?username={$uname}&username2={$friendi}' class='btn btn-danger btn-xs' role='button'>Delete</a>";
+            }
+            
+
+          "</td>
+        </tr>
+      ";
+    }
+   ?>
+  </tbody>
+  </table>
+  </div>
+
+  <div class="col-md-6 column"> <!--  List declined users and could recover -->
+  <?php
+    $sql = "select * from friend
+            where username2 = '{$uname}' and status = 'declined'
+            order by res_time;";
+    $result = pg_query($conn, $sql);
+  ?>
+  <h4>Hi, <?php echo $uname?>, you have declined <?php echo pg_num_rows($result) ?> users: </h4>
+  <table class="table table-hover">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Username</th>
+      <th>Date</th>
+      <th>Option</th>
+    </tr>
+  </thead>
+  <tbody>
+  
+  <?php 
+    date_default_timezone_set('America/New_York');
+    for ($i = 0; $i < pg_num_rows($result); $i++) {
+      $arri = pg_fetch_array($result, $i, PGSQL_BOTH);
+      $friendi = $arri['username'];
+      $datei = substr($arri['res_time'], 0, 16);
+      $index = $i + 1;
+      echo "
+        <tr>
+          <th scope='row'>{$index}</th>
+          <td>{$friendi}</td>
+          <td>{$datei}</td>
+          <td>
+          <a href='visithome.php?uname={$friendi}' class='btn btn-info btn-xs' role='button'>View Homepage</a>
+          ";
+            if ($admin == NULL || $admin != $uname) {
+
+            } else {
+              echo "<a href='declined_recover.php?username={$friendi}&username2={$uname}' class='btn btn-success btn-xs' role='button'>Recover</a>";
             }
             
 
