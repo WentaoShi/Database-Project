@@ -51,7 +51,7 @@
 <!--       <a href="newfeeds.php?uname=<?php echo $uname;?>" class="btn btn-primary btn-lg pull-left" role="button">Feeds</a>-->
 &nbsp;
 <h1>
-   <span style="color:#FF717E">Welcome, <?php echo $row['name'] ?>! This is your home page!</span>
+   <span style="color:#f76f6f">Welcome, <?php echo $row['name'] ?>! This is your home page!</span>
     </h1>
     
       
@@ -100,7 +100,7 @@
   <form action="up_profile.php" method="post" class="form-register">
   <input type="hidden" name="uname" value= <?php echo $admin; ?> >
   <input type="hidden" name="return" value="home" >
-  <span style="color:#FF717E"><h5>Say somethin' (Your profile):</h5></span>
+  <span style="color:#f76f6f"><h5>Say somethin' (Your profile):</h5></span>
   <textarea class="mytextarea" name="content" rows="2"  placeholder="Say Somethin' about yourself"></textarea>
   <input type="submit" value="Post saying" name="submit" class="btn btn-sm btn-warning btn-block">
   <a href="profile.php?uname=<?php echo $uname; ?>" class="btn btn-info btn-sm btn-block" role="button">View all your saying</a>
@@ -115,9 +115,9 @@
     <tr><td>
         <?php 
           if($resultarray['user_photo'] != NULL) {
-            echo "<p><h5><span style='color:#FF717E'>Change your profile photo!</h5></span></td>";
+            echo "<p><h5><span style='color:#f76f6f'>Change your profile photo!</h5></span></td>";
           } else {
-            echo "<p><h5><span style='color:#FF717E'>Upload your profile photo!</h5></span></td>";
+            echo "<p><h5><span style='color:#f76f6f'>Upload your profile photo!</h5></span></td>";
           }
 
          ?>

@@ -67,7 +67,7 @@
     <a href="logout.php?uname=<?php echo $uname; ?>" class="btn btn-warning btn-lg pull-right" role="button">Log out</a>
     <a href="newfeeds.php?uname=<?php echo $uname;?>" class="btn btn-primary btn-lg pull-left" role="button">Feeds</a>-->
     &nbsp;
-    <span style="color:#FF717E">Welcome, <?php echo $visitor_name; ?>! This is <?php echo $host_name; ?>'s home page!</span>
+    <span style="color:#f76f6f">Welcome, <?php echo $visitor_name; ?>! This is <?php echo $host_name; ?>'s home page!</span>
     </h1>
   
     
