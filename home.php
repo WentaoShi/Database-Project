@@ -284,15 +284,17 @@
       	$body .= "<br><br><br>";
       } else if (strlen($body) <= 70) {
       	$body .= "<br><br>";
-      }
+      } else {
+        
+      } 
       $title = ucfirst(strtolower($diaryresultarray['title']));
       $shortTitle = strlen($title) > 14 ? substr($title, 0, 14) . " ..." : $title;
-      $shortBody = strlen($body) > 90 ? substr($body, 0, 90) . " ..." : $body;
+      $shortBody = strlen($body) > 90 ? substr($body, 0, 80) . " ..." : $body;
       $shortDate = substr($diaryresultarray['diary_time'], 0, 16);
       echo textThumbnail($shortTitle, $shortDate, $shortBody, $uname, $diaryresultarray['did']);
     }
   }
-  if ($diaryNum <= 3 && $testarray['did'] != NULL) {
+  if ($testarray['did'] != NULL) {
     echo "<br><br><br><br><br><br><br><br><br><br><br><br><br>";
   }
 ?>
