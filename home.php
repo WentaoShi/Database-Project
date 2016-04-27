@@ -292,7 +292,7 @@
       echo textThumbnail($shortTitle, $shortDate, $shortBody, $uname, $diaryresultarray['did']);
     }
   }
-  if ($diaryNum < 3 && $testarray['did'] != NULL) {
+  if ($diaryNum <= 3 && $testarray['did'] != NULL) {
     echo "<br><br><br><br><br><br><br><br><br><br><br><br><br>";
   }
 ?>
