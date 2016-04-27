@@ -52,11 +52,8 @@ $num=pg_num_rows($rs);
 if($num){
 while($row=pg_fetch_array($rs)){	
 		?>
-    <table align="right" >
-    <tr><em> User Name :</em> <?php echo $row['username']   ?></tr>
-    <tr><em> Real Name :</em> <?php echo $row['name']   ?></tr>
-    
-    </table>
+    <em>User Name:</em> <a href='visithome.php?uname=<?php echo $row['username'] ?>'><?php echo $row['username']; ?></a>&nbsp;&nbsp;&nbsp;<em>Real Name:</em> <?php echo $row['name']; ?><br>
+  
   <?php
 }
 }
@@ -72,12 +69,13 @@ if($rs1) {
 $num1=pg_num_rows($rs1);
 if($num1){
 	?>
-	<table align="center" cellpadding="2" cellspacing="5" border="2" width="700px">
-	<tr><td><em> Pictures : </em></td>
-  <td><em> title: </em></td>
-  <td><em> describe:</em></td>
-  <td><em> time: </em></td>
-  <td><em> posted by:</em></td></tr>
+  <div class ='container'>
+	<table  class="table table-hover">
+	<tr><th><em> Pictures : </em></th>
+  <th><em> title: </em></th>
+  <th><em> describe:</em></th>
+  <th><em> time: </em></th>
+  <th><em> posted by:</em></th></tr>
  
   <?php   
   while($row=pg_fetch_array($rs1)){
@@ -91,10 +89,11 @@ $img=pg_unescape_bytea($row['photo']);
       <td><?php echo $row['title'] ?></td>
       <td><?php echo $row['des_text'] ?></td>
       <td><?php echo $row['media_time'] ?></td>
-      <td><?php echo $row['username'] ?></td></tr>
+      <td><a href='visithome.php?uname=<?php echo $row['username'] ?>'><?php echo $row['username'] ?></a></td></tr>
       <?php
      }  ?>    
-    </table> <?php
+    </table>
+    </div> <?php
   }
 else{
 	echo "No photo about '" . $search ."'!";
@@ -108,21 +107,29 @@ $rs2=pg_query($conn,$sql2);
 $num2=pg_num_rows($rs2);
 if($num2){
 	?>
-	<table align="center" cellpadding="3" cellspacing="5" border="2" width="500px">
-    <tr><td><em>title: </em></td>
-      <td><em>content: </em></td>
-    <td><em>time: </em></td>
-    <td><em>author: </em></td></tr>
+<div class ='container'>
+	<table class="table table-hover">
+    <tr><th><em>title: </em></th>
+      <th><em>content: </em></th>
+    <th><em>time: </em></th>
+    <th><em>author: </em></th></tr>
   <?php     
   while($row=pg_fetch_array($rs2)){  ?>
         <tr>
-      <td> <?php echo $row['title'] ?></td>
-    <td> <?php echo $row['body'] ?></td>
+      <td><a href='display_diary.php?uname=<?php echo $row['username'] ?>&did=<?php echo $row['did'] ?>'>
+
+       <?php echo $row['title'] ?></a>
+
+       </td>
+    <td> <?php echo substr($row['body'], 0, 60) . "..."; ?></td>
     <td> <?php echo $row['diary_time'] ?></td>
-    <td> <?php echo $row['username'] ?></td>
+    <td> <a href='visithome.php?uname=<?php echo $row['username'] ?>'>
+        <?php echo $row['username'] ?></a>
+    </td>
     </tr>   
     <?php } ?>     
-    </table><?php
+    </table>
+    </div><?php
 }
 else{
 	echo "No diary about '" . $search ."'!";
