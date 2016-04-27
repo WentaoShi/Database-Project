@@ -40,24 +40,18 @@
     $row = pg_fetch_array($result);
 
     ?>
-    <div class="container">
+<div class="container-fluid">
+<div class="row clearfix">
+<div class="col-md-12 column">
 
     <h1>
-    <!--
-    <a href="logout.php?uname=<?php echo $uname; ?>" class="btn btn-warning btn-lg pull-right" role="button">Log out</a>
-    <a href="newfeeds.php?uname=<?php echo $uname;?>" class="btn btn-primary btn-lg pull-left" role="button">Feeds</a>-->
-    &nbsp;
-    <span style="color:#FF717E">Welcome, <?php echo $row['name'] ?>! This is your home page!</span>
+    <p style="color:#FF717E">Welcome, <?php echo $row['name'] ?>! This is your home page!</p>
     </h1>
-  
-    
-      
-
     <hr class="hr2"></hr>
     
-    <div class="col-md-3">
+    <div class="col-md-3 column">
 
-
+<section>
     <?php
         include("functions/storePicToTmp.php");
       ?>
@@ -74,7 +68,9 @@
         }
 
        ?>
+</section>
 
+<section>
 <!-Profile Starts here->
 <?php
         $sql_p="SELECT * FROM profile WHERE pid in (select pid from post_p where username = '{$uname}') order by time_stamp desc;"; 
@@ -88,17 +84,20 @@
         }
 
 ?>
+</section>
+<section>
 <!-Write a Profile->
 <form action="up_profile.php" method="post" class="form-register">
 <input type="hidden" name="uname" value= <?php echo $admin; ?> >
 <input type="hidden" name="return" value="home" >
 <span style="color:#FF717E"><h5>Say somethin' (Your profile):</h5></span>
-<textarea name="content" rows="2" cols="33" placeholder="Say Somethin' about yourself"></textarea>
+<textarea class="mytextarea" name="content" rows="2"  placeholder="Say Somethin' about yourself"></textarea>
 <input type="submit" value="Post saying" name="submit" class="btn btn-sm btn-warning btn-block">
 <a href="profile.php?uname=<?php echo $uname; ?>" class="btn btn-info btn-sm btn-block" role="button">View all your saying</a>
 </form>
+</section>
 
-
+<section>
 <!-Upload Profile Photo->
 <table>
 <form action="photo_up_process.php" method="post" enctype="multipart/form-data" class="form-register">
@@ -131,13 +130,15 @@
 
 </form>
 <hr class="hr2"></hr>
+</section>
+
 
 <!-Friend start here->
 
 
 <h2>
-        <span class="cap">Your Friends:</span>
-    </h2>
+  <span class="cap">Your Friends:</span>
+</h2>
 
 
 
@@ -364,7 +365,8 @@ include("connect.php");
 
 
 </div>
-
+</div>
+</div>
 
 
 
