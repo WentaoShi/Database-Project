@@ -72,7 +72,7 @@
       echo setAlert("No greeting.");
     } else {
       ?>
-      <div class="panel panel-success">
+      <div class="panel panel-info">
        <div class="panel-heading">
           <h1 class="panel-title">Greeting:</h1>
        </div>

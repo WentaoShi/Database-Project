@@ -20,7 +20,7 @@
       $city=$_POST['city'];
       $street=$_POST['street'];
       $email=$_POST['email'];
-      $per_info = $_POST['per_info'];
+      $saying = $_POST['per_info'];
       if (!empty($uname) && !empty($password) && !empty($name) && !empty($birthday) && !empty($gender) && !empty($city) && !empty($email))
       {
         if($password!=$passwordn){
@@ -72,7 +72,18 @@
             if (!pg_query($conn, $sql)){
                 die(pg_last_error());
             }
-            else{
+
+            $pid = uniqid();
+            $encode_content = htmlspecialchars($saying, ENT_QUOTES);
+            $sql_saying = "INSERT INTO profile VALUES ('{$pid}', '{$encode_content}', current_timestamp);";
+            if (!pg_query($conn, $sql_saying)){
+                die(pg_last_error());
+            }
+            $sql2 = "INSERT INTO post_p VALUES ('{$uname}', '{$pid}');";
+
+            if (!pg_query($conn, $sql2)){
+               die(pg_last_error());
+            }
               
                 ?>
                  <form action="login.php">
@@ -88,7 +99,7 @@
 
               <?php
             
-            }
+            
           }
       }
     }

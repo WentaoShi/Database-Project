@@ -1,24 +1,39 @@
 <html>
+    <?php
+    include("connect.php");
+    include("functions/alert.php");
+    $type = $_GET['change'];
+    if (isset($_COOKIE['admin'])) {
+        $admin = $_COOKIE['admin'];
+    } else {
+        setAlert("Please log in.");
+        echo "<div class='text-center'><a href='login.php?' class='btn btn-success btn-lg' role='button'>Go Log in!</a></div>";
+        die;
+    }
+    include("functions/navi_bar.php");
+
+    ?>
     <head>
-        <title>User Register</title>
+        <title>Change Information</title>
         <script type="text/javascript" src="js/check.js"></script>
         <link href="bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="css/register.css" rel="stylesheet">
     </head>
 <body>
 <div class="form-register">
-<form action="insert.php" method="post" class="form-register">
+<form action="up_change.php" method="post" class="form-register" id="form">
     <table>
         <tr>
-            <td colspan="2"><h2>Register</h2></td>
+            <td colspan="2"><h2>Change Information</h2></td>
         </tr>
-        <tr>
-            <td class="form-left">User name *</td>
-            <td>
-                <input type="text" name="uname" class="form-control" placeholder="User Name" id="username"/>
-                <span id="usernameMsg"></span>
-            </td>
-        </tr>
+
+
+
+    <?php
+
+    switch ($type) {
+        case 'pwd':
+            ?>
         <tr>
             <td>Password *</td>
             <td>
@@ -33,26 +48,39 @@
                 <span id="confirmMsg"></span>
             </td>
         </tr>
+              <?php
+            break;
+        case 'name':
+            ?>
         <tr>
-            <td>Name *</td>
+            <td>Name<br> (This is not your username)</td>
             <td><input type="text" name="name" class="form-control" placeholder="Name" id="name"/><span id="nameMsg"></span></td>
         </tr>
+              <?php
+            break;
+        case 'email':
+            ?>
         <tr>
-            <td>Birthday *</td>
+            <td>Email *</td>
             <td>
-                <input type="date" name="birthday" class="form-control" placeholder="Birthday" id="birthday"/>
+                <input type="text" name="email" class="form-control" placeholder="Email" id="email"/>
+                <span id="email"></span>
             </td>
         </tr>
+              <?php
+            break;
+        case 'profile':
+            ?>
         <tr>
-            <td>Gender *</td>
-            <td><select name="gender" id="gender">
-                    <option value="m">Male</option>
-                    <option value="f">Female</option>
-                </select>
-                <span id="genderMsg"></span>
+            <td>Say Somethin' about yourself<br>(Your profile)</td>
+            <td>
+                <textarea name="saying" rows="2" cols="40"></textarea>
             </td>
         </tr>
-
+              <?php
+            break;
+        case 'address':
+            ?>
         <tr>
             <td>State</td>
             <td><select name="state" id="state">
@@ -128,21 +156,14 @@
                 <span id="street"></span>
             </td>
         </tr>
+              <?php
+        default:
+            # code...
+            break;
+    }
 
-        <tr>
-            <td>Email *</td>
-            <td>
-                <input type="text" name="email" class="form-control" placeholder="Email" id="email"/>
-                <span id="email"></span>
-            </td>
-        </tr>
+    ?>
 
-        <tr>
-            <td>Say Somethin' about yourself<br>(Your profile)</td>
-            <td>
-                <textarea name="per_info" rows="3" cols="50"></textarea>
-            </td>
-        </tr>
         </table>
         </div>
 
@@ -154,11 +175,14 @@
             </form>
 
 
-<a href="window.location.href='login.php'" class="btn btn-danger btn-lg" role="button">Go Back login!</a>
+<button type='button' class='btn btn-info btn-lg' onClick='history.go(-1);return true;'>Go Back</button>
         
 
 </div>
-        
+  <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<js/jquery.min.js"><\/script>')</script>
+    <script src="js/bootstrap.min.js"></script>   
         
 </body>
 </html>

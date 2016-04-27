@@ -24,6 +24,22 @@
     $title = $arr['title'];
     $body = $arr['body'];
     $date = substr($arr['diary_time'], 0, 16);
+    $visib = $arr['visib'];
+
+    switch ($visib) {
+      case 'f':
+        $visib = "My Friends";
+        break;
+      case 'fof':
+        $visib = "Friends of My Friends";
+        break;
+      case 'all':
+        $visib = "Whole World";
+        break;
+      default:
+        $visib = "Whole World";
+        break;
+    }
 
     $sql1="select name, username from users where username = (select username from post_d where did = '{$did}');";
 
@@ -58,7 +74,28 @@
     <div class='col-md-12'>&nbsp;
       <div class='thumbnail'>
         <div class='caption'>
-          <h3><?php echo $title; ?></h3><hr>
+
+<?php
+if ($author == $admin) {
+  ?>
+
+<div class="btn-group pull-right">
+  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Change visibility
+  </button>
+  <div class="dropdown-menu">
+    <li><a href="up_change.php?visib=f&uname=<?php echo $admin; ?>&did=<?php echo $did; ?>">Friends</a></li>
+    <li><a href="up_change.php?visib=fof&uname=<?php echo $admin; ?>&did=<?php echo $did; ?>">Friends of My Friends</a></li>
+    <li><a href="up_change.php?visib=all&uname=<?php echo $admin; ?>&did=<?php echo $did; ?>">Whole World</a></li>
+  </div>
+</div>
+<em>Visible to: <?php echo $visib; ?></em>
+  <?php
+}
+
+?>
+<h3><?php echo $title; ?></h3>
+          <hr>
           <h5>Written by:&nbsp;<strong><a href="visithome.php?uname=<?php echo $author; ?>"><?php echo $name; ?></a></strong></h5>
           At:&nbsp;<?php echo $date; ?><hr>
           <p><?php echo $body; ?></p>
@@ -128,8 +165,7 @@
 
 
 <div class="text-center">
-<form action='delete_d.php' method="get" class="form-register">
-  <a href="home.php?uname=<?php echo $uname; ?>" class="btn btn-success btn-lg" role="button">Go Back home!</a>
+
   
   <?php 
     $sql_author = "select username from post_d where did = '{$did}'";
@@ -141,11 +177,15 @@
       // echo "no access to change.";
       
     } else { ?>
+
+  <form action='delete_d.php' method="get" class="form-register">
+  <a href="home.php?uname=<?php echo $uname; ?>" class="btn btn-success btn-lg" role="button">Go Back home!</a>
     <input type="hidden" name="uname" value= <?php echo $uname; ?> >
     <input type="hidden" name="did" value= <?php echo $did; ?> >
     <input type="submit" value="Delete This Diary" name="submit" class="btn btn-lg btn-danger">
+    </form>
   <?php } ?>
-</form>
+
 
 </div>
 

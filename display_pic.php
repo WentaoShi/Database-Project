@@ -1,6 +1,8 @@
 <html>
   <?php
     include("connect.php");
+    include("functions/alert.php");
+    
     $mid = $_GET['mid'];
     $uname= $_GET['uname'];
     if (isset($_GET['type']) and $_GET['type'] == 'feeds'){
@@ -27,6 +29,21 @@
     $title = $arr['title'];
     $body = $arr['des_text'];
     $date = substr($arr['media_time'], 0, 16);
+    $visib = $arr['visib'];
+    switch ($visib) {
+      case 'f':
+        $visib = "My Friends";
+        break;
+      case 'fof':
+        $visib = "Friends of My Friends";
+        break;
+      case 'all':
+        $visib = "Whole World";
+        break;
+      default:
+        $visib = "Whole World";
+        break;
+    }
 
     $sql1="select name, username from users where username = (select username from post_m where mid = '{$mid}');";
 
@@ -76,7 +93,29 @@
         <img src='<?php echo $file_name; ?>' class='img-thumbnail' alt='<?php echo $title; ?>'>
 
           <h3><?php echo $title; ?></h3>
-          <a href='<?php echo $file_name; ?>' class="btn btn-success btn-xs" role="button">View Original</a>
+          <a href='<?php echo $file_name; ?>' class="btn btn-success btn-sm" role="button">View Original</a>
+
+<?php
+if ($author == $admin) {
+  ?>
+
+<div class="btn-group">
+  <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Change visibility
+  </button>
+  <div class="dropdown-menu">
+    <li><a href="up_change.php?visib=f&uname=<?php echo $admin; ?>&mid=<?php echo $mid; ?>&file=<?php echo $file_name; ?>">Friends</a></li>
+    <li><a href="up_change.php?visib=fof&uname=<?php echo $admin; ?>&mid=<?php echo $mid; ?>&file=<?php echo $file_name; ?>">Friends of My Friends</a></li>
+    <li><a href="up_change.php?visib=all&uname=<?php echo $admin; ?>&mid=<?php echo $mid; ?>&file=<?php echo $file_name; ?>">Whole World</a></li>
+  </div>
+</div><br>
+<em>Visible to: <?php echo $visib; ?></em>
+
+  <?php
+}
+
+?>
+
           <h5>by:&nbsp;<strong><a href="visithome.php?uname=<?php echo $author; ?>"><?php echo $name; ?></a></strong></h5>
           At:&nbsp;<?php echo $date; ?><hr>
           <?php echo $body; ?>

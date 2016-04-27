@@ -93,7 +93,7 @@
 <input type="hidden" name="uname" value= <?php echo $admin; ?> >
 <input type="hidden" name="return" value="home" >
 <span style="color:#FF717E"><h5>Say somethin' (Your profile):</h5></span>
-<textarea name="content" rows="2" cols="33"></textarea>
+<textarea name="content" rows="2" cols="33" placeholder="Say Somethin' about yourself"></textarea>
 <input type="submit" value="Post saying" name="submit" class="btn btn-sm btn-warning btn-block">
 <a href="profile.php?uname=<?php echo $uname; ?>" class="btn btn-info btn-sm btn-block" role="button">View all your saying</a>
 </form>
@@ -211,6 +211,14 @@
           </td>
           <td>
             <?php echo $row['city'] ?>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <em>Email: </em>
+          </td>
+          <td>
+            <?php echo $row['email'] ?>
           </td>
         </tr>
       </table>

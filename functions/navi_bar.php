@@ -31,9 +31,33 @@
             <li><a href="write_diary.php?uname=<?php echo $admin; ?>">Write a Diary</a></li>
           </ul>
         </li>
+<?php
+    include("connect.php");
+    $sql3="SELECT * from friend where username2='{$admin}' and status='pending'"; 
+    $rs3=pg_query($conn,$sql3); 
+    $num3=pg_num_rows($rs3);
+
+?>
+
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Friends <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Friends 
+
+<?php 
+if ($num3) {
+  echo " <span class='badge'>{$num3}</span>";
+}
+
+?>
+          <span class="caret"></span></a>
           <ul class="dropdown-menu">
+<?php 
+if ($num3) {
+  echo "<li><a href='friend_process.php?uname={$admin}'>Friend Requests <span class='badge'>{$num3}</span> </a></li>
+    <li role='separator' class='divider'></li>";
+}
+
+?>
+
             <li><a href="friend_request.php?uname=<?php echo $admin; ?>">Add Friends</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="friend_manager.php?uname=<?php echo $admin; ?>">Friend Manager</a></li>
@@ -80,9 +104,11 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <?php echo $admin ?><span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#">Change Password</a></li>
-            <li><a href="#">Change Profile</a></li>
-            <li><a href="#">Change Address</a></li>
+            <li><a href="change.php?change=name">Change Name</a></li>
+            <li><a href="change.php?change=pwd">Change Password</a></li>
+            <li><a href="change.php?change=email">Change email</a></li>
+            <li><a href="change.php?change=profile">Change Profile</a></li>
+            <li><a href="change.php?change=address">Change Address</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="#">About this website</a></li>
           </ul>
