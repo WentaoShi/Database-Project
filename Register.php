@@ -154,7 +154,7 @@
             </form>
 
 
-<a href="window.location.href='login.php'" class="btn btn-danger btn-lg" role="button">Go Back login!</a>
+<a href="login.php" class="btn btn-danger btn-lg" role="button">Go Back login!</a>
         
 
 </div>
