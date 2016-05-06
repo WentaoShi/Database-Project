@@ -1,0 +1,101 @@
+digraph flowchart {
+  rankdir=TB; fontname=Helvetica
+  node[shape=record, peripheries=0, style=filled, fillcolor=steelblue, fontcolor=white,fontname=Helvetica,fixedsize=true,width=1.8,height=0.8]
+  edge[fontname=Helvetica,fontsize=12,fontcolor=blue,labeldistance=1.8]
+
+  index [shape=record, label="index.php"]
+  initial [shape=diamond, label="Initial Database?"]
+
+  subgraph cluster_create {
+    label="Set Up Tables of Database";
+    style=filled; fillcolor=grey92
+    connect [shape=record, style="filled", label="connect.php"]
+    create  [shape=record, style="filled,rounded", label="createtable.sql", fillcolor=tomato]
+    subgraph cluster_setuppro {
+      label="Set Up Procedures"
+      style=filled; fillcolor=grey82
+      fetch_feeds [shape=record, style="filled,rounded", label="fetch_feeds.sql", fillcolor=tomato]
+      fetch_FofList [shape=record, style="filled,rounded", label="fetch_FofList.sql", fillcolor=tomato]
+      fetch_friendList [shape=record, style="filled,rounded", label="fetch_friendList.sql", fillcolor=tomato]      
+      fetch_visithome [shape=record, style="filled,rounded", label="fetch_visithome.sql", fillcolor=tomato]
+      fetch_reachedPersonFeeds [shape=record, style="filled,rounded", label="fetch_reached\nPersonFeeds.sql", fillcolor=tomato]
+      fetch_search [shape=record, style="filled,rounded", label="fetch_search.sql", fillcolor=tomato]
+
+    }
+  }
+
+  subgraph cluster_login {
+    label="login.php"
+    style=filled; fillcolor=grey92
+    check [shape=record, style="filled", label="check.php"]
+    matched [shape=diamond, label="Passwords-User\nMatched?"]
+    setcookie [shape=plaintext, label="setcookie"]
+  }
+
+  index -> initial
+  initial -> connect     [taillabel="Yes"]
+  connect -> create
+  create  -> fetch_feeds -> fetch_FofList -> fetch_friendList -> fetch_visithome -> fetch_reachedPersonFeeds -> fetch_search
+  initial -> check [taillabel="No"]
+  check -> matched 
+  matched -> setcookie [taillabel="Yes"]
+  matched -> "Register.php" [taillabel="No"]
+
+  subgraph cluster_homepage{
+    label="Homepage of User"
+    style=filled; fillcolor=grey92
+    "home.php"
+    check_cookie [shape=diamond, label="Cookie Matched?"]
+  }
+
+  setcookie -> "home.php" -> check_cookie
+  check_cookie -> check [taillabel="No"]
+
+  subgraph cluster_friends {
+    label="Friends"
+    style=filled; fillcolor=grey92
+    friend_func [label="Friends", shape=oval, fillcolor=grey50]
+    subgraph cluster_request {
+      label="Request Friends"
+      style=filled; fillcolor=grey82
+      f_request [label="friend_\nrequest.php"]
+      f_request_do [label="friend_\nrequest_do.php"]
+      email [shape="plaintext", label="Sending\nEmail"]
+
+    }
+    subgraph cluster_friends_mng {
+      label="friends_manage.php"
+      style=filled; fillcolor=grey82
+      subgraph cluster_f_white {
+        label="Whitelist"
+        style=filled; fillcolor=grey72
+        has_friends [shape=diamond, label="Has Friends?"]
+        f_display [shape=plaintext, label="List Friends"]
+        delete_friends [shape=diamond, label="Delete Friend(s)?"]
+        f_delete [label="friend_delete.php"]
+        visit_friends [shape=diamond, label="Visit Friend's\nHomepage?"]
+        visit_f_page [label="visithome.php"]
+      }
+      subgraph cluster_f_black {
+        label="Blacklist"
+        style=filled; fillcolor=grey72
+        recover [shape=diamond, label="Recover requests\ndeclined by you?"]
+        "declined_\nrecover.php"
+
+      }
+    }
+  }
+  check_cookie -> friend_func [taillabel="Yes"]
+  friend_func -> f_request -> f_request_do -> email
+  friend_func -> has_friends
+  has_friends -> f_display [taillabel="Yes"]
+  has_friends -> f_request [taillabel="No"]
+  f_display -> delete_friends
+  delete_friends -> f_delete [taillabel="Yes"]
+  delete_friends -> visit_friends [taillabel="No"]
+  visit_friends -> visit_f_page [taillabel="Yes"]
+  friend_func -> recover
+  recover -> "declined_\nrecover.php" [taillabel="Yes"]
+
+  
+}
