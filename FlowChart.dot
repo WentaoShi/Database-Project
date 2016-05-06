@@ -1,0 +1,181 @@
+digraph flowchart {
+  rankdir=TB; fontname=Helvetica
+  node[shape=record, peripheries=0, style=filled, fillcolor=steelblue, fontcolor=white,fontname=Helvetica,fixedsize=true,width=1.8,height=0.8]
+  edge[fontname=Helvetica,fontsize=12,fontcolor=blue,labeldistance=1.8]
+
+  index [shape=record, label="index.php"]
+  initial [shape=diamond, label="Initial Database?"]
+
+  subgraph cluster_create {
+    label="Set Up Tables of Database";
+    style=filled; fillcolor=grey92
+    connect [shape=record, style="filled", label="connect.php"]
+    create  [shape=record, style="filled,rounded", label="createtable.sql", fillcolor=tomato]
+    subgraph cluster_setuppro {
+      label="Set Up Procedures"
+      style=filled; fillcolor=grey82
+      fetch_feeds [shape=record, style="filled,rounded", label="fetch_feeds.sql", fillcolor=tomato]
+      fetch_FofList [shape=record, style="filled,rounded", label="fetch_FofList.sql", fillcolor=tomato]
+      fetch_friendList [shape=record, style="filled,rounded", label="fetch_friendList.sql", fillcolor=tomato]      
+      fetch_visithome [shape=record, style="filled,rounded", label="fetch_visithome.sql", fillcolor=tomato]
+      fetch_reachedPersonFeeds [shape=record, style="filled,rounded", label="fetch_reached\nPersonFeeds.sql", fillcolor=tomato]
+      fetch_search [shape=record, style="filled,rounded", label="fetch_search.sql", fillcolor=tomato]
+
+    }
+  }
+  subgraph cluster_login {
+    label="login.php"
+    style=filled; fillcolor=grey92
+    check [shape=record, style="filled", label="check.php"]
+    matched [shape=diamond, label="Passwords-User\nMatched?"]
+    setcookie [shape=plaintext, label="setcookie"]
+  }
+  index -> initial
+  initial -> connect     [taillabel="Yes"]
+  connect -> create
+  create  -> fetch_feeds -> fetch_FofList -> fetch_friendList -> fetch_visithome -> fetch_reachedPersonFeeds -> fetch_search
+  initial -> check [taillabel="No"]
+  check -> matched 
+  matched -> setcookie [taillabel="Yes"]
+  matched -> "Register.php" [taillabel="No"]
+
+
+  subgraph cluster_homepage{
+    label="Homepage of User"
+    style=filled; fillcolor=aliceblue
+    "home.php"
+    check_cookie [shape=diamond, label="Cookie Matched?"]
+  
+    setcookie -> "home.php" -> check_cookie
+    check_cookie -> check [taillabel="No"]
+
+
+    subgraph cluster_friends {
+      label="Friends of User"
+      style=filled; fillcolor=grey92
+      friend_func [label="Friends", shape=oval, fillcolor=grey50]
+      subgraph cluster_request {
+        label="Request Friends"
+        style=filled; fillcolor=grey82
+        f_request [label="friend_\nrequest.php"]
+        f_request_do [label="friend_\nrequest_do.php"]
+        email [shape="plaintext", label="Sending\nEmail"]
+
+      }
+      subgraph cluster_friends_mng {
+        label="friends_manage.php"
+        style=filled; fillcolor=grey82
+        subgraph cluster_f_white {
+          label="Whitelist"
+          style=filled; fillcolor=grey72
+          has_friends [shape=diamond, label="Has Friends?"]
+          f_display [shape=plaintext, label="List Friends"]
+          delete_friends [shape=diamond, label="Delete Friend(s)?"]
+          f_delete [label="friend_delete.php"]
+          visit_friends [shape=diamond, label="Visit Friend's\nHomepage?"]
+        }
+        subgraph cluster_f_black {
+          label="Blacklist"
+          style=filled; fillcolor=grey72
+          recover [shape=diamond, label="Recover requests\ndeclined by you?"]
+          "declined_\nrecover.php"
+
+        }
+      }
+    }
+    check_cookie -> friend_func [taillabel="Yes"]
+    friend_func -> f_request -> f_request_do -> email
+    friend_func -> has_friends
+    has_friends -> f_display [taillabel="Yes"]
+    has_friends -> f_request [taillabel="No"]
+    f_display -> delete_friends
+    delete_friends -> f_delete [taillabel="Yes"]
+    delete_friends -> visit_friends [taillabel="No"]
+    friend_func -> recover
+    recover -> "declined_\nrecover.php" [taillabel="Yes"]
+
+
+    subgraph cluster_profile{
+      label="Profile of User"
+      style=filled; fillcolor=grey92
+      profile_func [label="Profile", shape=oval, fillcolor=grey50]
+      "Display Avatar"
+      "Display Profile"
+      update_profile [shape=diamond, label="Update your\nprofile?"]
+      "up_profile.php" 
+      upload_avatar [shape=diamond, label="Upload new\navatar?"]
+      "photo_up_\nprocess.php" 
+    }
+    check_cookie -> profile_func [taillabel="Yes"]
+    profile_func -> "Display Avatar" -> "Display Profile"
+    profile_func -> update_profile
+    profile_func -> upload_avatar
+    update_profile -> "up_profile.php" [taillabel="Yes"]
+    upload_avatar -> "photo_up_\nprocess.php" [taillabel="Yes"]
+
+
+    subgraph cluster_Photo{
+      label="Photo of User"
+      style=filled; fillcolor=grey92
+      Photo_func [label="Photo", shape=oval, fillcolor=grey50]
+      "Display Uploaded\nPictures"
+      "gallery.php"
+      update_Photo [shape=diamond, label="Update your\nPhoto?"]
+      "choose_photo.php" 
+      detele_Photo [shape=diamond, label="Delete your\nPhoto?"]
+      "delete_p.php"
+      futher_Photo [shape=diamond, label="See details of\nyour photo?"]
+      "display_pic.php"
+    }
+    check_cookie -> Photo_func [taillabel="Yes"]
+    Photo_func -> "Display Uploaded\nPictures" -> "gallery.php"
+    Photo_func -> update_Photo
+    update_Photo -> "choose_photo.php" [taillabel="Yes"]
+    "gallery.php" -> futher_Photo
+    futher_Photo -> "display_pic.php" [taillabel="Yes"]
+    "display_pic.php" -> detele_Photo
+    detele_Photo -> "delete_p.php" [taillabel="Yes"]
+
+
+    subgraph cluster_Diary{
+      label="Diary of User"
+      style=filled; fillcolor=grey92
+      Diary_func [label="Diary", shape=oval, fillcolor=grey50]
+      "Display Posted\nPictures"
+      "thumbnail.php"
+      "diary_list.php"
+      update_Diary [shape=diamond, label="Update your\nDiary?"]
+      "write_diary.php" 
+      detele_Diary [shape=diamond, label="Delete your\nDiary?"]
+      "delete_d.php"
+      futher_Diary [shape=diamond, label="See details of\nyour Diary?"]
+      "display_diary.php"
+    }
+    check_cookie -> Diary_func [taillabel="Yes"]
+    Diary_func -> "Display Posted\nPictures" -> "thumbnail.php" -> "diary_list.php"
+    Diary_func -> update_Diary
+    update_Diary -> "write_diary.php" [taillabel="Yes"]
+    "diary_list.php" -> futher_Diary
+    futher_Diary -> "display_diary.php" [taillabel="Yes"]
+    "display_diary.php" -> detele_Diary
+    detele_Diary -> "delete_d.php" [taillabel="Yes"]
+
+    subgraph cluster_search {
+      label="Search other users and \ndiaries/photo containing certain keyword"
+      style=filled; fillcolor=grey92
+      srch [label="search.php"]
+    }
+    check_cookie -> srch [taillabel="Yes"]
+    subgraph cluster_feed {
+      label="List diaries/photo of \nfriends and FoF to which user can access"
+      style=filled; fillcolor=grey92
+      feeds [label="newfeeds.php"]
+    }
+    check_cookie -> feeds [taillabel="Yes"]
+
+  }
+
+  visit_f_page [label="visithome.php"]
+  visit_friends -> visit_f_page [taillabel="Yes"]
+
+}
