@@ -1,39 +1,10 @@
-## Update Apr 24:
-- 修复了通过link输入`./home.php?uname=xxx`可以进入任何人的页面的问题。
-- 用了cookie，运行前要确保浏览器可以接受保存cookie。
-- password已加密。用的`password_hash()` 和 `password_verify`()，php版本必须为5.5以上才能正常运行。
+Project for CS 6083 Database
 
-## Update Apr 20:
+Team: C4
 
-写、删除diary，diary列表，在Homepage展示最近三个diary。
+Author List:
 
-## Update Apr 18:
+Liang Shan (ls3818)
+Wentao Shi (ws1105)
+Yun Yan (yy1533)
 
-做完了上传头像照片的功能，然后在home页可以展示头像。未上传头像的user展示一张默认头像。已上传头像的用户可以更改头像。
-
-
-## 说明
-咱们就用GitHub来version control吧，有什么进展都写在这里，省的做重复了。
-
-## Progress:
-
-已完成:
-- index done
-- automatically insert table done
-- register done
-- login done
-- home page - half done
-  
-待完成:
-- home page
-  - personal information done
-    - 显示头像
-    - 显示 dairy
-    - 显示签名
-    - 显示 photo
-    - 显示 friend request
-    - ... ...
-
-## Problems:
-- 通过link输入`./home.php?uname=xxx`可以进入任何人的页面，待修改为`uname=xxx&password=yyy`
-- password is plaintext, needs to be encrypted.
