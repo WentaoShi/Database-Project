@@ -15,6 +15,6 @@ Dependencies:
     - mcrypt
     - pgsql
 
-A Full DEMO presentation see: [Slides](goo.gl/Wpd9aV)
+A Full DEMO presentation see: [Slides](http://goo.gl/Wpd9aV)
 
-A Report of This Project: [Doc](goo.gl/alSzuY)
+A Report of This Project: [Doc](http://goo.gl/alSzuY)
